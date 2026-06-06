@@ -6,8 +6,8 @@
     <title>Network Diagramming App</title>
     <style>
         :root {
-            --bg-color: #fafafa; --box-bg: #ffffff; --text-main: #1a202c; --text-sub: #718096;
-            --stroke-color: #4a5568; --grid-color: #e5e5e5; --site-bg: rgba(0,0,0,0.03);
+            --bg-color: #e8e9eb; --box-bg: #ffffff; --text-main: #1a202c; --text-sub: #718096;
+            --stroke-color: #4a5568; --grid-color: #a0a8b4; --site-bg: rgba(0,0,0,0.03);
             --site-stroke: #a0aec0; --site-text: #4a5568; --panel-bg: #ffffff; --panel-border: #ddd;
         }
         body.dark-mode {
@@ -140,11 +140,11 @@
         /* ── Tooltip ── */
         #info-tooltip {
             position: absolute; pointer-events: none; display: none; z-index: 2000;
-            background: rgba(20,20,20,0.95); color: #fff; padding: 10px 14px;
-            border-radius: 6px; font-size: 13px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border: 1px solid #555; white-space: pre-wrap; line-height: 1.4; max-width: 260px;
+            background: rgba(20,20,20,0.93); color: #f0f0f0; padding: 10px 14px;
+            border-radius: 6px; font-size: 13px; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            border: 1.5px solid #222; white-space: pre-wrap; line-height: 1.4; max-width: 260px;
         }
-        body.dark-mode #info-tooltip { background: rgba(230,230,230,0.95); color: #111; border-color: #aaa; }
+        body.dark-mode #info-tooltip { border-color: #666; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
 
         /* ── Viewer Popup ── */
         #viewer-popup {
@@ -262,7 +262,7 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
     <!-- ═══ DESKTOP TOOLBAR ═══ -->
     <div id="toolbar">
@@ -280,7 +280,7 @@
                 <label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="checkbox" id="chk-grid" checked onchange="render(false)"> Grid</label>
                 <label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:5px;"><input type="checkbox" id="chk-snap" checked> Snap</label>
                 <label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:5px;"><input type="checkbox" id="chk-glow" checked onchange="render(false)"> Glow</label>
-                <label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:10px;padding-left:10px;border-left:1px solid var(--panel-border);"><input type="checkbox" id="chk-dark" onchange="toggleDarkMode()"> Dark Mode</label>
+                <label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:10px;padding-left:10px;border-left:1px solid var(--panel-border);"><input type="checkbox" id="chk-dark" checked onchange="toggleDarkMode()"> Dark Mode</label>
             </div>
             <div class="tool-group">
                 <button onclick="handleZoom(0.9)">➕</button>
@@ -452,6 +452,15 @@
     const IS_VIEWER = false;
     const INJECTED_DATA = null;
 
+    // Custom crosshair cursor — dark outline + white inner so visible on any background
+    const CURSOR_CROSSHAIR = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='3' fill='none' stroke='%23111' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='3' fill='none' stroke='white' stroke-width='0.75'/%3E%3Cline x1='12' y1='2' x2='12' y2='8' stroke='%23111' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='12' y1='16' x2='12' y2='22' stroke='%23111' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='2' y1='12' x2='8' y2='12' stroke='%23111' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='16' y1='12' x2='22' y2='12' stroke='%23111' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='12' y1='2' x2='12' y2='8' stroke='white' stroke-width='0.75' stroke-linecap='round'/%3E%3Cline x1='12' y1='16' x2='12' y2='22' stroke='white' stroke-width='0.75' stroke-linecap='round'/%3E%3Cline x1='2' y1='12' x2='8' y2='12' stroke='white' stroke-width='0.75' stroke-linecap='round'/%3E%3Cline x1='16' y1='12' x2='22' y2='12' stroke='white' stroke-width='0.75' stroke-linecap='round'/%3E%3C/svg%3E\") 12 12, crosshair";
+
+    // Custom grab cursor — outlined open hand
+    const CURSOR_GRAB = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M8 10V6.5a1.5 1.5 0 0 1 3 0V10m0-3.5a1.5 1.5 0 0 1 3 0V10m0-2a1.5 1.5 0 0 1 3 0v5l-1.5 2.5H9.5L7 13.5v-2a1.5 1.5 0 0 1 3 0' fill='white' stroke='%23111' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M8 10V6.5a1.5 1.5 0 0 1 3 0V10m0-3.5a1.5 1.5 0 0 1 3 0V10m0-2a1.5 1.5 0 0 1 3 0v5l-1.5 2.5H9.5L7 13.5v-2a1.5 1.5 0 0 1 3 0' fill='none' stroke='white' stroke-width='0.5' stroke-linejoin='round'/%3E%3C/svg%3E\") 8 4, grab";
+
+    // Custom grabbing cursor — outlined closed/gripping hand
+    const CURSOR_GRABBING = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='6' y='10' width='12' height='8' rx='2' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='8' y='7' width='2.5' height='5' rx='1.25' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='11' y='6' width='2.5' height='5' rx='1.25' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='14' y='7' width='2.5' height='5' rx='1.25' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='8' y='7' width='2.5' height='5' rx='1.25' fill='none' stroke='white' stroke-width='0.4'/%3E%3Crect x='11' y='6' width='2.5' height='5' rx='1.25' fill='none' stroke='white' stroke-width='0.4'/%3E%3Crect x='14' y='7' width='2.5' height='5' rx='1.25' fill='none' stroke='white' stroke-width='0.4'/%3E%3C/svg%3E\") 10 10, grabbing";
+
     let nodes = [], edges = [], sites = [];
     let mode = 'select';
     let selectedDeviceType = 'Router';
@@ -611,6 +620,7 @@
     function setMode(newMode) {
         if (IS_VIEWER) return;
         mode = newMode; connectingFromId = null; isDragging = false; isPanning = false; isDrawingSite = false;
+        infoTooltip.style.display = 'none';
         if (resizingSiteId) { resizingSiteId = null; pushHistory(); }
         updateToolbarUI(); render(false);
     }
@@ -631,7 +641,7 @@
 
         document.querySelectorAll('.btn-device').forEach(b => b.classList.toggle('active', mode==='place' && b.dataset.type===selectedDeviceType));
         document.querySelectorAll('.btn-cable').forEach(b  => b.classList.toggle('active', mode==='connect' && b.dataset.type===selectedCableType));
-        svg.style.cursor = mode==='select' ? 'default' : 'crosshair';
+        svg.style.cursor = mode==='select' ? 'default' : CURSOR_CROSSHAIR;
 
         // Mode banner (mobile)
         const banner = document.getElementById('mode-banner');
@@ -770,7 +780,7 @@
                 selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
                 closeViewerPopup(); render(false);
             }
-            isPanning = true; svg.style.cursor = 'grabbing';
+            isPanning = true; svg.style.cursor = CURSOR_GRABBING;
             lastMousePos = { x: synth.clientX, y: synth.clientY };
             return;
         }
@@ -789,11 +799,11 @@
                 let changed = false;
                 if (selectedNodes.size||selectedEdges.size||selectedSites.size) { selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); changed=true; }
                 if (changed) render();
-                isPanning = true; svg.style.cursor = 'grabbing';
+                isPanning = true; svg.style.cursor = CURSOR_GRABBING;
                 lastMousePos = { x: synth.clientX, y: synth.clientY };
             } else if (mode === 'connect') {
                 connectingFromId = null; render();
-                isPanning = true; svg.style.cursor = 'grabbing';
+                isPanning = true; svg.style.cursor = CURSOR_GRABBING;
                 lastMousePos = { x: synth.clientX, y: synth.clientY };
             }
         }
@@ -845,11 +855,16 @@
         } else if (mode === 'connect' && connectingFromId) {
             const pl = document.getElementById('preview-line');
             if (pl) { pl.setAttribute('x2', currentMousePos.x); pl.setAttribute('y2', currentMousePos.y); }
+            // Also move the end-dot — re-render is lightweight here
+            render(false);
+        } else if (mode === 'place' || mode === 'site') {
+            // Ghost follows cursor — re-render to update position
+            render(false);
         }
     }
 
     function pointerUp() {
-        if (isPanning) { isPanning = false; svg.style.cursor = IS_VIEWER ? 'default' : (mode==='select'?'default':'crosshair'); }
+        if (isPanning) { isPanning = false; svg.style.cursor = IS_VIEWER ? 'default' : (mode==='select'?'default':CURSOR_CROSSHAIR); }
         if (IS_VIEWER) return;
         if (resizingSiteId) { resizingSiteId=null; pushHistory(); }
         if (isDrawingSite)  { isDrawingSite=false; setMode('select'); pushHistory(); }
@@ -867,7 +882,7 @@
             ['layer-edges','layer-sites','layer-nodes','layer-grid'].includes(e.target.id);
         if (e.button===2) {
             // Right-click always pans (non-viewer); viewer uses left-click bg for pan (handled in pointerDown)
-            if (!IS_VIEWER) { isPanning=true; svg.style.cursor='grabbing'; lastMousePos={x:e.clientX,y:e.clientY}; }
+            if (!IS_VIEWER) { isPanning=true; svg.style.cursor=CURSOR_GRABBING; lastMousePos={x:e.clientX,y:e.clientY}; }
             return;
         }
         if (e.button!==0) return;
@@ -1393,13 +1408,13 @@
                 if(isDragging||isPanning||resizingSiteId) return;
                 if(!IS_VIEWER&&mode!=='select') return;
                 const safeNotes=site.notes?site.notes.replace(/</g,'&lt;').replace(/>/g,'&gt;'):'None';
-                infoTooltip.innerHTML=`<strong style="font-size:15px;color:#4dabf7;">${site.name||'Unnamed Site'}</strong><br/><br/><span style="color:var(--text-sub);">Notes:</span><br/>${safeNotes}`;
+                infoTooltip.innerHTML=`<strong style="font-size:15px;color:#4dabf7;">${site.name||'Unnamed Site'}</strong><br/><br/><span style="color:#9ab;">Notes:</span><br/>${safeNotes}`;
                 infoTooltip.style.display='block';
                 const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15;
                 infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
             });
             g.addEventListener('mousemove', e=>{
-                if(isDragging||isPanning||resizingSiteId){infoTooltip.style.display='none';return;}
+                if(isDragging||isPanning||resizingSiteId||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;}
                 const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15;
                 infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
             });
@@ -1468,12 +1483,12 @@
                     if(isDragging||isPanning||resizingSiteId) return;
                     if(!IS_VIEWER&&mode!=='select') return;
                     const safeNotes=edge.notes?edge.notes.replace(/</g,'&lt;').replace(/>/g,'&gt;'):'None';
-                    infoTooltip.innerHTML=`<strong style="font-size:15px;color:${cp.color};">${cp.name}</strong><br/><br/><span style="color:var(--text-sub);">Label:</span> ${edge.label||'None'}<br/><span style="color:var(--text-sub);">Src:</span> ${edge.sourceLabel||'None'}<br/><span style="color:var(--text-sub);">Tgt:</span> ${edge.targetLabel||'None'}<br/><br/>${safeNotes}`;
+                    infoTooltip.innerHTML=`<strong style="font-size:15px;color:${cp.color};">${cp.name}</strong><br/><br/><span style="color:#9ab;">Label:</span> ${edge.label||'None'}<br/><span style="color:#9ab;">Src:</span> ${edge.sourceLabel||'None'}<br/><span style="color:#9ab;">Tgt:</span> ${edge.targetLabel||'None'}<br/><br/>${safeNotes}`;
                     infoTooltip.style.display='block';
                     const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15;
                     infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
                 });
-                lineG.addEventListener('mousemove', e=>{ const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
+                lineG.addEventListener('mousemove', e=>{ if(isDragging||isPanning||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;} const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
                 lineG.addEventListener('mouseleave',()=>infoTooltip.style.display='none');
 
                 const line=document.createElementNS('http://www.w3.org/2000/svg','line');
@@ -1522,7 +1537,7 @@
             g.setAttribute('transform',`translate(${node.x},${node.y}) scale(${scale})`);
             g.setAttribute('class','node'); g.setAttribute('id',`node-${node.id}`);
             g.style.pointerEvents='all';
-            g.style.cursor=IS_VIEWER?'pointer':(mode==='select'?'move':(mode==='connect'?'crosshair':'default'));
+            g.style.cursor=IS_VIEWER?'pointer':(mode==='select'?'move':(mode==='connect'?CURSOR_CROSSHAIR:'default'));
 
             g.addEventListener('mousedown', e=>handleItemMouseDown(e,node.id,'node'));
             g.addEventListener('touchstart', e=>handleItemTouchStart(e,node.id,'node'),{passive:false});
@@ -1538,12 +1553,12 @@
                 if(isDragging||isPanning||resizingSiteId) return;
                 if(!IS_VIEWER&&mode!=='select') return;
                 const safeNotes=node.notes?node.notes.replace(/</g,'&lt;').replace(/>/g,'&gt;'):'None';
-                infoTooltip.innerHTML=`<strong style="font-size:15px;color:#4dabf7;">${node.name||'Unnamed'}</strong><br/><br/><span style="color:var(--text-sub);">IP:</span> ${node.ip||'N/A'}<br/><br/>${safeNotes}`;
+                infoTooltip.innerHTML=`<strong style="font-size:15px;color:#4dabf7;">${node.name||'Unnamed'}</strong><br/><br/><span style="color:#9ab;">IP:</span> ${node.ip||'N/A'}<br/><br/>${safeNotes}`;
                 infoTooltip.style.display='block';
                 const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15;
                 infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
             });
-            g.addEventListener('mousemove', e=>{ if(isDragging||isPanning){infoTooltip.style.display='none';return;} const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
+            g.addEventListener('mousemove', e=>{ if(isDragging||isPanning||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;} const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
             g.addEventListener('mouseleave',()=>infoTooltip.style.display='none');
 
             const safeName=node.name||'',safeIp=node.ip||'';
@@ -1599,10 +1614,63 @@
                 indicator.setAttribute('cx',src.x);indicator.setAttribute('cy',src.y);
                 indicator.setAttribute('stroke',cableTypes[selectedCableType].color);
                 indicator.style.display='block';
+
+                // Cursor-end dot so you can see exactly where the connection will land
+                const endDot=document.createElementNS('http://www.w3.org/2000/svg','circle');
+                endDot.setAttribute('cx',currentMousePos.x);endDot.setAttribute('cy',currentMousePos.y);
+                endDot.setAttribute('r','5');
+                endDot.setAttribute('fill',cableTypes[selectedCableType].color);
+                endDot.setAttribute('stroke','white');endDot.setAttribute('stroke-width','1.5');
+                endDot.style.pointerEvents='none';
+                layerUI.appendChild(endDot);
             }
         }
         previewLine.style.pointerEvents='none';
         layerUI.appendChild(previewLine);
+
+        // Place-mode ghost: icon + box anchored to crosshair
+        if(mode==='place'&&!IS_VIEWER){
+            const ghost=document.createElementNS('http://www.w3.org/2000/svg','g');
+            ghost.style.pointerEvents='none'; ghost.style.opacity='0.55';
+            const isSmall=['AP','PC','Laptop','Phone','Printer','Cloud','Generic'].includes(selectedDeviceType);
+            const sc=isSmall?0.8:1.0;
+            ghost.setAttribute('transform',`translate(${currentMousePos.x},${currentMousePos.y}) scale(${sc})`);
+
+            const gr=document.createElementNS('http://www.w3.org/2000/svg','rect');
+            const gw=Math.max(isSmall?70:100, selectedDeviceType.length*7.5+20);
+            gr.setAttribute('x',-(gw/2));gr.setAttribute('y','-35');
+            gr.setAttribute('width',gw);gr.setAttribute('height','65');gr.setAttribute('rx','8');
+            gr.setAttribute('fill','var(--box-bg)');gr.setAttribute('stroke','var(--stroke-color)');gr.setAttribute('stroke-width','2');
+            gr.setAttribute('stroke-dasharray','4,3');
+            ghost.appendChild(gr);
+
+            const gi=document.createElementNS('http://www.w3.org/2000/svg','text');
+            gi.setAttribute('x','0');gi.setAttribute('y','-10');gi.setAttribute('text-anchor','middle');
+            gi.setAttribute('font-size','20');gi.textContent=icons[selectedDeviceType]||'📦';
+            ghost.appendChild(gi);
+
+            const gn=document.createElementNS('http://www.w3.org/2000/svg','text');
+            gn.setAttribute('x','0');gn.setAttribute('y','12');gn.setAttribute('text-anchor','middle');
+            gn.setAttribute('font-family','sans-serif');gn.setAttribute('font-size','12');
+            gn.setAttribute('font-weight','bold');gn.setAttribute('fill','var(--text-main)');
+            gn.textContent=selectedDeviceType;
+            ghost.appendChild(gn);
+
+            layerUI.appendChild(ghost);
+        }
+
+        // Site-draw ghost while dragging
+        if(mode==='site'&&!IS_VIEWER&&!isDrawingSite){
+            const sg=document.createElementNS('http://www.w3.org/2000/svg','g');
+            sg.style.pointerEvents='none'; sg.style.opacity='0.4';
+            const sr=document.createElementNS('http://www.w3.org/2000/svg','rect');
+            sr.setAttribute('x',currentMousePos.x-40);sr.setAttribute('y',currentMousePos.y-20);
+            sr.setAttribute('width','80');sr.setAttribute('height','40');sr.setAttribute('rx','8');
+            sr.setAttribute('fill','none');sr.setAttribute('stroke','var(--site-stroke)');
+            sr.setAttribute('stroke-width','2');sr.setAttribute('stroke-dasharray','8,4');
+            sg.appendChild(sr);
+            layerUI.appendChild(sg);
+        }
 
         // Legend
         const legend=document.createElementNS('http://www.w3.org/2000/svg','g');
@@ -1653,7 +1721,7 @@
         const ui=clone.querySelector('#layer-ui');if(ui)ui.remove();
         const isDark=document.body.classList.contains('dark-mode');
         const style=document.createElement('style');
-        style.textContent=`:root{--bg-color:${isDark?'#121212':'#fafafa'};--box-bg:${isDark?'#2d3748':'#ffffff'};--text-main:${isDark?'#e2e8f0':'#1a202c'};--text-sub:${isDark?'#a0aec0':'#718096'};--stroke-color:${isDark?'#718096':'#4a5568'};--site-bg:${isDark?'rgba(255,255,255,0.03)':'rgba(0,0,0,0.03)'};--site-stroke:${isDark?'#4a5568':'#a0aec0'};--site-text:${isDark?'#e2e8f0':'#4a5568'};}`;
+        style.textContent=`:root{--bg-color:${isDark?'#121212':'#e8e9eb'};--box-bg:${isDark?'#2d3748':'#ffffff'};--text-main:${isDark?'#e2e8f0':'#1a202c'};--text-sub:${isDark?'#a0aec0':'#718096'};--stroke-color:${isDark?'#718096':'#4a5568'};--site-bg:${isDark?'rgba(255,255,255,0.03)':'rgba(0,0,0,0.03)'};--site-stroke:${isDark?'#4a5568':'#a0aec0'};--site-text:${isDark?'#e2e8f0':'#4a5568'};}`;
         clone.prepend(style);
         const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
         bg.setAttribute('x',minX);bg.setAttribute('y',minY);bg.setAttribute('width',w);bg.setAttribute('height',h);
