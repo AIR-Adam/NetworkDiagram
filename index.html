@@ -217,7 +217,10 @@
             white-space: nowrap; cursor: pointer;
             transition: opacity 0.2s, transform 0.2s;
         }
-        #fab-edit.visible { display: flex; align-items: center; gap: 8px; }
+        /* Only show FAB on touch/coarse-pointer devices */
+        @media (pointer: coarse) {
+            #fab-edit.visible { display: flex; align-items: center; gap: 8px; }
+        }
         @media (max-width: 768px) {
             /* only show FAB in mobile layout */
         }
@@ -1504,8 +1507,15 @@
                 lineG.appendChild(ca);
                 layerEdges.appendChild(lineG);
 
-                let t1=0.25,t2=0.75;
-                if(len>120){t1=65/len;t2=1-(65/len);} else if(len<50){t1=0.5;t2=0.5;}
+                // Place port labels a fixed distance outside the node box edge.
+                // Node boxes are ~50px half-width at scale 1, ~40px at scale 0.8.
+                // We push the label LABEL_OFFSET px along the line from the node center,
+                // clamping to the midpoint so they don't cross each other on short edges.
+                const LABEL_OFFSET = 62; // px from node center — clears the box edge
+                const half = len / 2;
+                const t1 = len > 0 ? Math.min(LABEL_OFFSET / len, half / len) : 0.5;
+                const t2 = len > 0 ? Math.max(1 - LABEL_OFFSET / len, half / len) : 0.5;
+
                 const drawPortLabel=(textStr,tp,isCenter=false)=>{
                     if(!textStr) return;
                     const mx=x1+(x2-x1)*tp,my=y1+(y2-y1)*tp;
