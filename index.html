@@ -41,7 +41,7 @@
         #more-dropdown {
             display: none; position: absolute; top: calc(100% + 6px); right: 0;
             background: var(--panel-bg); border: 1px solid var(--panel-border);
-            border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+            border-radius: 0px; box-shadow: 0 6px 24px rgba(0,0,0,0.18);
             min-width: 180px; z-index: 2000; overflow: hidden;
         }
         #more-dropdown.open { display: block; }
@@ -72,7 +72,7 @@
         #mobile-toolbar-top::-webkit-scrollbar { display: none; }
         #mobile-title {
             font-size: 15px; font-weight: bold; border: 1px solid transparent;
-            padding: 4px 8px; border-radius: 4px; outline: none; background: transparent;
+            padding: 4px 8px; border-radius: 0px; outline: none; background: transparent;
             color: var(--text-main); min-width: 110px; max-width: 140px; flex-shrink: 0;
         }
         #mobile-title:focus { border-color: var(--panel-border); background: var(--bg-color); }
@@ -95,9 +95,9 @@
             text-transform: uppercase; margin: 0 2px;
         }
 
-        /* ── Shared button styles ── */
+        /* ── Shared button styles (Square) ── */
         button {
-            padding: 8px 12px; border: 1px solid #ccc; background: #fff; border-radius: 6px;
+            padding: 8px 12px; border: 1px solid #ccc; background: #fff; border-radius: 0px;
             cursor: pointer; font-size: 14px; transition: all 0.15s; display: flex; align-items: center;
             gap: 6px; white-space: nowrap; flex-shrink: 0; touch-action: manipulation;
         }
@@ -113,14 +113,13 @@
         body.dark-mode button:not(.active) { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
         body.dark-mode button:not(.active):hover { background: #4a5568; }
 
-        /* Mobile buttons slightly taller for touch */
         @media (pointer: coarse) {
             button { padding: 10px 12px; min-height: 40px; }
         }
 
         #diagram-title {
             font-size: 18px; font-weight: bold; border: 1px solid transparent;
-            padding: 4px 8px; border-radius: 4px; outline: none; transition: border 0.2s;
+            padding: 4px 8px; border-radius: 0px; outline: none; transition: border 0.2s;
             width: 200px; color: var(--text-main); background: transparent;
         }
         #diagram-title:hover, #diagram-title:focus { border: 1px solid var(--panel-border); background: var(--bg-color); }
@@ -137,22 +136,22 @@
         .site-box:hover rect { stroke: #007bff !important; }
         .edge-hover:hover line:first-child { stroke-width: 6px !important; }
 
-        /* ── Tooltip ── */
+        /* ── Tooltip (Square) ── */
         #info-tooltip {
             position: absolute; pointer-events: none; display: none; z-index: 2000;
             background: rgba(20,20,20,0.93); color: #f0f0f0; padding: 10px 14px;
-            border-radius: 6px; font-size: 13px; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            border-radius: 0px; font-size: 13px; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             border: 1.5px solid #222; white-space: pre-wrap; line-height: 1.4; max-width: 260px;
         }
         body.dark-mode #info-tooltip { border-color: #666; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
 
-        /* ── Viewer Popup ── */
+        /* ── Viewer Popup (Square) ── */
         #viewer-popup {
             display: none; position: fixed; z-index: 3000;
             left: 50%; bottom: 20px; transform: translateX(-50%);
             width: min(340px, calc(100vw - 32px));
             background: var(--panel-bg); color: var(--text-main);
-            border: 1px solid var(--panel-border); border-radius: 10px;
+            border: 1px solid var(--panel-border); border-radius: 0px;
             box-shadow: 0 6px 24px rgba(0,0,0,0.22); padding: 12px; flex-direction: column;
             animation: vp-slidein 0.2s ease;
         }
@@ -166,7 +165,7 @@
         .vp-close:hover { color: #dc3545 !important; }
         #vp-content { font-size: 12px; line-height: 1.5; color: var(--text-main); white-space: pre-wrap; max-height: 180px; overflow-y: auto; }
 
-        /* ── Sidebar ── */
+        /* ── Sidebar (Square components) ── */
         #sidebar {
             width: 280px; background: var(--panel-bg); border-left: 1px solid var(--panel-border);
             box-shadow: -2px 0 5px rgba(0,0,0,0.05); display: none; flex-direction: column;
@@ -176,7 +175,7 @@
         .prop-group { margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px; }
         .prop-group label { font-size: 12px; font-weight: bold; color: var(--text-sub); text-transform: uppercase; }
         .prop-group input, .prop-group textarea {
-            padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;
+            padding: 8px; border: 1px solid #ccc; border-radius: 0px; font-size: 14px;
             font-family: inherit; width: 100%; box-sizing: border-box; background: #fff; color: #333;
         }
         body.dark-mode .prop-group input, body.dark-mode .prop-group textarea { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
@@ -184,14 +183,13 @@
         #no-props { color: var(--text-sub); font-size: 14px; text-align: center; margin-top: 40px; font-style: italic; }
         #save-status { font-size: 13px; font-weight: bold; color: #28a745; margin-left: 5px; opacity: 0; transition: opacity 0.5s; width: 150px; }
 
-        /* ── Mobile Properties Sheet ── */
+        /* ── Mobile Properties Sheet (Square) ── */
         #mobile-props-sheet {
             display: none; position: fixed; left: 0; right: 0; z-index: 1500;
-            background: var(--panel-bg); border-top: 2px solid #007bff; border-radius: 16px 16px 0 0;
+            background: var(--panel-bg); border-top: 2px solid #007bff; border-radius: 0px;
             box-shadow: 0 -4px 20px rgba(0,0,0,0.2); padding: 16px;
             max-height: 80vh; overflow-y: auto;
             transform: translateY(100%); transition: transform 0.25s ease, bottom 0.15s ease;
-            /* bottom is set dynamically by JS based on visualViewport */
             bottom: 0;
         }
         #mobile-props-sheet.open { transform: translateY(0); }
@@ -200,60 +198,41 @@
         .mps-group { margin-bottom: 12px; }
         .mps-group label { font-size: 11px; font-weight: bold; color: var(--text-sub); text-transform: uppercase; display: block; margin-bottom: 4px; }
         .mps-group input, .mps-group textarea {
-            width: 100%; padding: 8px 10px; border: 1px solid var(--panel-border); border-radius: 6px;
+            width: 100%; padding: 8px 10px; border: 1px solid var(--panel-border); border-radius: 0px;
             font-size: 14px; font-family: inherit; background: var(--bg-color); color: var(--text-main);
         }
         .mps-group input:focus, .mps-group textarea:focus { outline: none; border-color: #007bff; }
-        #mps-delete-btn { width: 100%; margin-top: 8px; background: #dc3545; color: white; border-color: #c82333; justify-content: center; padding: 12px; font-size: 15px; border-radius: 8px; }
+        #mps-delete-btn { width: 100%; margin-top: 8px; background: #dc3545; color: white; border-color: #c82333; justify-content: center; padding: 12px; font-size: 15px; border-radius: 0px; }
 
         /* ── Floating Edit FAB ── */
         #fab-edit {
             display: none; position: fixed; bottom: 70px; left: 50%;
             transform: translateX(-50%);
             z-index: 1400; background: #007bff; color: white;
-            border: none; border-radius: 24px; padding: 12px 22px;
+            border: none; border-radius: 0px; padding: 12px 22px;
             font-size: 15px; font-weight: bold;
             box-shadow: 0 4px 16px rgba(0,0,0,0.3);
             white-space: nowrap; cursor: pointer;
             transition: opacity 0.2s, transform 0.2s;
         }
-        /* Only show FAB on touch/coarse-pointer devices */
         @media (pointer: coarse) {
             #fab-edit.visible { display: flex; align-items: center; gap: 8px; }
-        }
-        @media (max-width: 768px) {
-            /* only show FAB in mobile layout */
-        }
-
-        /* ── Long-press indicator ── */
-        #longpress-ring {
-            position: absolute; pointer-events: none; display: none; z-index: 3000;
-            width: 56px; height: 56px; border-radius: 50%;
-            border: 3px solid #dc3545; transform: translate(-50%, -50%);
-        }
-        #longpress-ring.animating {
-            animation: lp-shrink 0.6s ease forwards;
-        }
-        @keyframes lp-shrink {
-            from { opacity: 1; transform: translate(-50%,-50%) scale(1.4); }
-            to   { opacity: 0.2; transform: translate(-50%,-50%) scale(0.7); }
         }
 
         /* ── Mode indicator banner (mobile) ── */
         #mode-banner {
             display: none; position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
             z-index: 1200; background: rgba(0,0,0,0.75); color: white;
-            padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: bold;
+            padding: 6px 18px; border-radius: 0px; font-size: 13px; font-weight: bold;
             pointer-events: none;
         }
 
-        /* ── Mobile layout adjustments ── */
         @media (max-width: 768px) {
             #toolbar { display: none; }
             #mobile-toolbar { display: flex; }
             #mobile-bottom { display: block; }
             #sidebar { display: none !important; }
-            #main-area { padding-bottom: 56px; /* leave room for bottom bar */ }
+            #main-area { padding-bottom: 56px; }
             #mode-banner { display: block; }
         }
 
@@ -267,6 +246,7 @@
 </head>
 <body class="dark-mode">
 
+    <!-- ═══ DESKTOP TOOLBAR ═══ -->
     <div id="toolbar">
         <div id="toolbar-edit-1" class="toolbar-row">
             <div class="tool-group" style="padding-right: 10px;">
@@ -350,6 +330,7 @@
         </div>
     </div>
 
+    <!-- ═══ MOBILE TOOLBAR ═══ -->
     <div id="mobile-toolbar">
         <div id="mobile-toolbar-top">
             <input type="text" id="mobile-title" value="Untitled Network" oninput="syncTitle()" onchange="pushHistory()" placeholder="Diagram Name">
@@ -373,10 +354,13 @@
         </div>
     </div>
 
+    <!-- ═══ FLOATING EDIT BUTTON (mobile) ═══ -->
     <button id="fab-edit" onclick="openMobileProps()">✏️ Edit Selected</button>
 
+    <!-- ═══ MODE BANNER ═══ -->
     <div id="mode-banner">✏️ Place: Router</div>
 
+    <!-- ═══ MAIN AREA ═══ -->
     <div id="main-area">
         <div id="canvas-container">
             <div id="info-tooltip"></div>
@@ -387,11 +371,12 @@
                     <button class="vp-close" onclick="closeViewerPopup()">&times;</button>
                 </div>
                 <div id="vp-content"></div>
-                <button id="vp-copy" style="margin-top:10px;width:100%;justify-content:center;background:#007bff;color:white;border-color:#0056b3;padding:7px;border-radius:4px;cursor:pointer;font-size:12px;">📋 Copy Info</button>
+                <button id="vp-copy" style="margin-top:10px;width:100%;justify-content:center;background:#007bff;color:white;border-color:#0056b3;padding:7px;border-radius:0px;cursor:pointer;font-size:12px;">📋 Copy Info</button>
             </div>
             <svg id="canvas" xmlns="http://www.w3.org/2000/svg"></svg>
         </div>
 
+        <!-- Desktop sidebar -->
         <div id="sidebar">
             <h3>Properties</h3>
             <div id="no-props">Select a device, site, or connection.</div>
@@ -404,6 +389,7 @@
         </div>
     </div>
 
+    <!-- ═══ MOBILE BOTTOM BAR (device/cable picker) ═══ -->
     <div id="mobile-bottom">
         <div id="mobile-bottom-row">
             <span class="mb-section-label">Add:</span>
@@ -431,6 +417,7 @@
         </div>
     </div>
 
+    <!-- ═══ MOBILE PROPERTIES SHEET ═══ -->
     <div id="mobile-props-sheet">
         <h4 id="mps-title">Properties <button onclick="closeMobileProps()">&times;</button></h4>
         <div class="mps-group" id="mps-group-1"><label id="mps-lbl-1">Name</label><input type="text" id="mps-prop-1" oninput="updateActiveProp(1,this.value)" onchange="pushHistory()" autocomplete="off"></div>
@@ -442,29 +429,40 @@
 
     <script>
     // ═══════════════════════════════════════════════════════
-    //  STATE
+    //  STATE & GRID SYSTEM
     // ═══════════════════════════════════════════════════════
     const IS_VIEWER = false;
     const INJECTED_DATA = null;
 
-    // Custom crosshair cursor — dark outline + white inner so visible on any background
+    // The Grid dictates all layout dimensions ensuring perfect uniform gaps.
+    const GRID_SIZE = 30;
+    const BOX_MARGIN = 5; // Resulting 10px uniform gap between objects
+
+    // Structural Block Formations (Cols x Rows)
+    const blockFormations = {
+        'Router':   {w: 2, h: 2},
+        'Switch':   {w: 4, h: 2}, // Switches are double wide
+        'Server':   {w: 2, h: 2},
+        'Firewall': {w: 2, h: 2}, 
+        'AP':       {w: 2, h: 2},
+        'PC':       {w: 2, h: 2},
+        'Laptop':   {w: 2, h: 2},
+        'Phone':    {w: 2, h: 2},
+        'Printer':  {w: 2, h: 2},
+        'NAS':      {w: 2, h: 2},
+        'Cloud':    {w: 4, h: 4}, // Cloud is extra large
+        'Generic':  {w: 2, h: 2}
+    };
+
     const CURSOR_CROSSHAIR = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='3' fill='none' stroke='%23111' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='3' fill='none' stroke='white' stroke-width='0.75'/%3E%3Cline x1='12' y1='2' x2='12' y2='8' stroke='%23111' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='12' y1='16' x2='12' y2='22' stroke='%23111' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='2' y1='12' x2='8' y2='12' stroke='%23111' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='16' y1='12' x2='22' y2='12' stroke='%23111' stroke-width='2' stroke-linecap='round'/%3E%3Cline x1='12' y1='2' x2='12' y2='8' stroke='white' stroke-width='0.75' stroke-linecap='round'/%3E%3Cline x1='12' y1='16' x2='12' y2='22' stroke='white' stroke-width='0.75' stroke-linecap='round'/%3E%3Cline x1='2' y1='12' x2='8' y2='12' stroke='white' stroke-width='0.75' stroke-linecap='round'/%3E%3Cline x1='16' y1='12' x2='22' y2='12' stroke='white' stroke-width='0.75' stroke-linecap='round'/%3E%3C/svg%3E\") 12 12, crosshair";
-
-    // Custom grab cursor — outlined open hand
-    const CURSOR_GRAB = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M8 10V6.5a1.5 1.5 0 0 1 3 0V10m0-3.5a1.5 1.5 0 0 1 3 0V10m0-2a1.5 1.5 0 0 1 3 0v5l-1.5 2.5H9.5L7 13.5v-2a1.5 1.5 0 0 1 3 0' fill='white' stroke='%23111' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M8 10V6.5a1.5 1.5 0 0 1 3 0V10m0-3.5a1.5 1.5 0 0 1 3 0V10m0-2a1.5 1.5 0 0 1 3 0v5l-1.5 2.5H9.5L7 13.5v-2a1.5 1.5 0 0 1 3 0' fill='none' stroke='white' stroke-width='0.5' stroke-linejoin='round'/%3E%3C/svg%3E\") 8 4, grab";
-
-    // Custom grabbing cursor — outlined closed/gripping hand
-    const CURSOR_GRABBING = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='6' y='10' width='12' height='8' rx='2' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='8' y='7' width='2.5' height='5' rx='1.25' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='11' y='6' width='2.5' height='5' rx='1.25' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='14' y='7' width='2.5' height='5' rx='1.25' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='8' y='7' width='2.5' height='5' rx='1.25' fill='none' stroke='white' stroke-width='0.4'/%3E%3Crect x='11' y='6' width='2.5' height='5' rx='1.25' fill='none' stroke='white' stroke-width='0.4'/%3E%3Crect x='14' y='7' width='2.5' height='5' rx='1.25' fill='none' stroke='white' stroke-width='0.4'/%3E%3C/svg%3E\") 10 10, grabbing";
+    const CURSOR_GRABBING = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect x='6' y='10' width='12' height='8' rx='0' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='8' y='7' width='2.5' height='5' rx='0' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='11' y='6' width='2.5' height='5' rx='0' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='14' y='7' width='2.5' height='5' rx='0' fill='white' stroke='%23111' stroke-width='1.5'/%3E%3Crect x='8' y='7' width='2.5' height='5' rx='0' fill='none' stroke='white' stroke-width='0.4'/%3E%3Crect x='11' y='6' width='2.5' height='5' rx='0' fill='none' stroke='white' stroke-width='0.4'/%3E%3Crect x='14' y='7' width='2.5' height='5' rx='0' fill='none' stroke='white' stroke-width='0.4'/%3E%3C/svg%3E\") 10 10, grabbing";
 
     let nodes = [], edges = [], sites = [];
     let mode = 'select';
     let selectedDeviceType = 'Router';
     let selectedCableType = '1GbE';
 
-    let selectedNodes = new Set();
-    let selectedEdges = new Set();
-    let selectedSites = new Set();
-
+    let selectedNodes = new Set(), selectedEdges = new Set(), selectedSites = new Set();
     let isDragging = false, isPanning = false, isDrawingSite = false, hasMoved = false;
     let resizingSiteId = null, resizeAnchor = { x:0, y:0 };
     let lastMousePos = null, dragStartMousePos = null;
@@ -478,12 +476,10 @@
     let saveTimeout=null, toastTimeout=null;
     let history=[], historyIndex=-1;
 
-    // Touch state
-    let activeTouches = new Map();   // touchId → {clientX, clientY}
+    let activeTouches = new Map();
     let pinchStartDist = 0, pinchStartScale = 1, pinchStartVbX = 0, pinchStartVbY = 0;
     let longPressTimer = null;
     const LONG_PRESS_MS = 600;
-    const isMobile = () => window.matchMedia('(max-width: 768px)').matches || navigator.maxTouchPoints > 0;
 
     const svg = document.getElementById('canvas');
     const infoTooltip = document.getElementById('info-tooltip');
@@ -501,9 +497,6 @@
         'VPN':     { color:'#dc3545', name:'Site-to-Site VPN', dash:'8,6' }
     };
 
-    // ═══════════════════════════════════════════════════════
-    //  INIT
-    // ═══════════════════════════════════════════════════════
     window.onload = () => {
         if (IS_VIEWER) {
             document.getElementById('toolbar-edit-1').style.display = 'none';
@@ -523,9 +516,6 @@
         }
     };
 
-    // ═══════════════════════════════════════════════════════
-    //  HELPERS — title sync across desktop/mobile inputs
-    // ═══════════════════════════════════════════════════════
     function syncTitle() {
         const dt = document.getElementById('diagram-title');
         const mt = document.getElementById('mobile-title');
@@ -539,9 +529,6 @@
         document.getElementById('mobile-title').value = v;
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  COORDINATE HELPERS
-    // ═══════════════════════════════════════════════════════
     function getMousePos(evt) {
         const pt = svg.createSVGPoint();
         pt.x = evt.clientX; pt.y = evt.clientY;
@@ -549,22 +536,21 @@
         if (!ctm) return { x: evt.clientX, y: evt.clientY };
         return pt.matrixTransform(ctm.inverse());
     }
-    function getTouchPos(touch) {
-        return getMousePos({ clientX: touch.clientX, clientY: touch.clientY });
-    }
-    function snapPoint(pt) {
+
+    function snapPoint(pt, isSite = false) {
         const chk = document.getElementById('chk-snap');
-        if (!IS_VIEWER && chk && chk.checked)
-            return { x: Math.round(pt.x/20)*20, y: Math.round(pt.y/20)*20 };
-        return pt;
-    }
-    function dist2(a, b) {
-        return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+        if (!IS_VIEWER && chk && chk.checked) {
+            if (isSite) {
+                return { x: Math.round(pt.x/GRID_SIZE)*GRID_SIZE, y: Math.round(pt.y/GRID_SIZE)*GRID_SIZE };
+            } else {
+                const cellX = Math.floor(pt.x / GRID_SIZE);
+                const cellY = Math.floor(pt.y / GRID_SIZE);
+                return { x: cellX * GRID_SIZE + BOX_MARGIN, y: cellY * GRID_SIZE + BOX_MARGIN };
+            }
+        }
+        return isSite ? pt : { x: pt.x - 20, y: pt.y - 20 };
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  VIEWPORT
-    // ═══════════════════════════════════════════════════════
     function updateViewBox() {
         const rect = svg.getBoundingClientRect();
         vbW = rect.width * zoomScale; vbH = rect.height * zoomScale;
@@ -598,8 +584,8 @@
     function fitToScreen() {
         if (nodes.length === 0 && sites.length === 0) { resetZoom(); return; }
         let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity;
-        nodes.forEach(n => { minX=Math.min(minX,n.x-100); minY=Math.min(minY,n.y-100); maxX=Math.max(maxX,n.x+100); maxY=Math.max(maxY,n.y+100); });
-        sites.forEach(s => { minX=Math.min(minX,s.x-20); minY=Math.min(minY,s.y-20); maxX=Math.max(maxX,s.x+s.w+20); maxY=Math.max(maxY,s.y+s.h+20); });
+        nodes.forEach(n => { minX=Math.min(minX,n.x-50); minY=Math.min(minY,n.y-50); maxX=Math.max(maxX,n.x+150); maxY=Math.max(maxY,n.y+150); });
+        sites.forEach(s => { minX=Math.min(minX,s.x-50); minY=Math.min(minY,s.y-50); maxX=Math.max(maxX,s.x+s.w+50); maxY=Math.max(maxY,s.y+s.h+50); });
         const cW=maxX-minX, cH=maxY-minY;
         const rect=svg.getBoundingClientRect();
         if (cW<=0||cH<=0||rect.width===0||rect.height===0) return;
@@ -609,9 +595,6 @@
         updateViewBox(); render(false);
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  MODE / TOOLBAR UI
-    // ═══════════════════════════════════════════════════════
     function setMode(newMode) {
         if (IS_VIEWER) return;
         mode = newMode; connectingFromId = null; isDragging = false; isPanning = false; isDrawingSite = false;
@@ -624,11 +607,9 @@
 
     function updateToolbarUI() {
         if (IS_VIEWER) return;
-        // Desktop
         document.getElementById('btn-select').classList.toggle('active', mode==='select');
         document.getElementById('btn-connect').classList.toggle('active', mode==='connect');
         document.getElementById('btn-site').classList.toggle('active', mode==='site');
-        // Mobile top
         document.getElementById('mb-btn-select').classList.toggle('active', mode==='select');
         document.getElementById('mb-btn-connect').classList.toggle('active', mode==='connect');
         document.getElementById('mb-btn-site').classList.toggle('active', mode==='site');
@@ -638,36 +619,18 @@
         document.querySelectorAll('.btn-cable').forEach(b  => b.classList.toggle('active', mode==='connect' && b.dataset.type===selectedCableType));
         svg.style.cursor = mode==='select' ? 'default' : CURSOR_CROSSHAIR;
 
-        // Mode banner (mobile)
         const banner = document.getElementById('mode-banner');
-        const modeLabels = {
-            select:  '🖱️ Select / Drag',
-            connect: `🔗 Connect — ${cableTypes[selectedCableType]?.name||selectedCableType}`,
-            place:   `✏️ Place: ${selectedDeviceType}`,
-            site:    '🔲 Draw Site — drag to size',
-        };
+        const modeLabels = { select:'🖱️ Select / Drag', connect:`🔗 Connect — ${cableTypes[selectedCableType]?.name||selectedCableType}`, place:`✏️ Place: ${selectedDeviceType}`, site:'🔲 Draw Site' };
         banner.textContent = modeLabels[mode] || mode;
         banner.style.opacity = (mode !== 'select') ? '1' : '0';
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  HISTORY / SAVE
-    // ═══════════════════════════════════════════════════════
     function generateId() { return Math.random().toString(36).substr(2,9); }
 
-    // ── More menu (desktop) ──
-    function toggleMoreMenu(e) {
-        e.stopPropagation();
-        document.getElementById('more-dropdown').classList.toggle('open');
-    }
-    function closeMoreMenu() {
-        document.getElementById('more-dropdown').classList.remove('open');
-    }
-    document.addEventListener('click', e => {
-        if (!e.target.closest('.more-menu-wrap')) closeMoreMenu();
-    });
+    function toggleMoreMenu(e) { e.stopPropagation(); document.getElementById('more-dropdown').classList.toggle('open'); }
+    function closeMoreMenu() { document.getElementById('more-dropdown').classList.remove('open'); }
+    document.addEventListener('click', e => { if (!e.target.closest('.more-menu-wrap')) closeMoreMenu(); });
 
-    // ── Keyboard-aware mobile props sheet ──
     function updateSheetPosition() {
         const sheet = document.getElementById('mobile-props-sheet');
         const fab = document.getElementById('fab-edit');
@@ -678,10 +641,7 @@
             if (fab && fab.classList.contains('visible')) fab.style.bottom = (offset + 70) + 'px';
         }
     }
-    if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', updateSheetPosition);
-        window.visualViewport.addEventListener('scroll', updateSheetPosition);
-    }
+    if (window.visualViewport) { window.visualViewport.addEventListener('resize', updateSheetPosition); window.visualViewport.addEventListener('scroll', updateSheetPosition); }
 
     function pushHistory() {
         if (IS_VIEWER) return;
@@ -726,11 +686,9 @@
     }
     function saveJSON() {
         const blob = new Blob([JSON.stringify({ title:getTitleValue(), nodes, edges, sites },null,2)], { type:'application/json' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
         a.download = (getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram') + '.json';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        triggerToast('✓ JSON Saved');
+        document.body.appendChild(a); a.click(); document.body.removeChild(a); triggerToast('✓ JSON Saved');
     }
     function loadJSON(event) {
         if (IS_VIEWER) return;
@@ -738,14 +696,12 @@
         const reader = new FileReader();
         reader.onload = e => {
             try {
-                const d = JSON.parse(e.target.result);
-                nodes=d.nodes||[]; sites=d.sites||[]; edges=d.edges||[];
+                const d = JSON.parse(e.target.result); nodes=d.nodes||[]; sites=d.sites||[]; edges=d.edges||[];
                 setTitleValue(d.title||'Untitled Network');
                 selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
                 pushHistory(); render(true);
             } catch(err) { alert('Invalid file format.'); }
-        };
-        reader.readAsText(file); event.target.value='';
+        }; reader.readAsText(file); event.target.value='';
     }
 
     function toggleDarkMode() {
@@ -755,61 +711,38 @@
         render(false);
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  UNIFIED POINTER HELPERS  (mouse + touch share the same logic)
-    // ═══════════════════════════════════════════════════════
-
-    // Synthesise a mouse-like event from a Touch
-    function touchToMouse(touch, type) {
-        return { clientX: touch.clientX, clientY: touch.clientY, button: 0,
-                 shiftKey: false, ctrlKey: false, metaKey: false, _type: type,
-                 stopPropagation() {}, preventDefault() {} };
-    }
+    function touchToMouse(touch, type) { return { clientX: touch.clientX, clientY: touch.clientY, button: 0, shiftKey: false, ctrlKey: false, metaKey: false, _type: type, stopPropagation() {}, preventDefault() {} }; }
 
     function pointerDown(synth, isBgClick) {
         if (resizingSiteId) { resizingSiteId = null; pushHistory(); render(); return; }
-
         if (isBgClick && IS_VIEWER) {
-            // Deselect and start panning
-            if (selectedNodes.size||selectedEdges.size||selectedSites.size) {
-                selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
-                closeViewerPopup(); render(false);
-            }
-            isPanning = true; svg.style.cursor = CURSOR_GRABBING;
-            lastMousePos = { x: synth.clientX, y: synth.clientY };
-            return;
+            if (selectedNodes.size||selectedEdges.size||selectedSites.size) { selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); closeViewerPopup(); render(false); }
+            isPanning = true; svg.style.cursor = CURSOR_GRABBING; lastMousePos = { x: synth.clientX, y: synth.clientY }; return;
         }
-
         if (isBgClick && !IS_VIEWER) {
             if (mode === 'place') {
-                const pos = snapPoint(getMousePos(synth));
+                const pos = snapPoint(getMousePos(synth), false);
                 nodes.push({ id:generateId(), type:selectedDeviceType, name:selectedDeviceType, ip:'', notes:'', x:pos.x, y:pos.y });
                 pushHistory(); render();
             } else if (mode === 'site') {
-                isDrawingSite = true;
-                startPos = snapPoint(getMousePos(synth));
-                sites.push({ id:generateId(), name:'New Location', x:startPos.x, y:startPos.y, w:0, h:0 });
-                render();
+                isDrawingSite = true; startPos = snapPoint(getMousePos(synth), true);
+                sites.push({ id:generateId(), name:'New Location', x:startPos.x, y:startPos.y, w:0, h:0 }); render();
             } else if (mode === 'select') {
                 let changed = false;
                 if (selectedNodes.size||selectedEdges.size||selectedSites.size) { selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); changed=true; }
                 if (changed) render();
-                isPanning = true; svg.style.cursor = CURSOR_GRABBING;
-                lastMousePos = { x: synth.clientX, y: synth.clientY };
+                isPanning = true; svg.style.cursor = CURSOR_GRABBING; lastMousePos = { x: synth.clientX, y: synth.clientY };
             } else if (mode === 'connect') {
                 connectingFromId = null; render();
-                isPanning = true; svg.style.cursor = CURSOR_GRABBING;
-                lastMousePos = { x: synth.clientX, y: synth.clientY };
+                isPanning = true; svg.style.cursor = CURSOR_GRABBING; lastMousePos = { x: synth.clientX, y: synth.clientY };
             }
         }
     }
 
     function pointerMove(synth) {
         currentMousePos = getMousePos(synth);
-
         if (isPanning && lastMousePos) {
-            const dx = synth.clientX - lastMousePos.x;
-            const dy = synth.clientY - lastMousePos.y;
+            const dx = synth.clientX - lastMousePos.x, dy = synth.clientY - lastMousePos.y;
             vbX -= dx * zoomScale; vbY -= dy * zoomScale;
             lastMousePos = { x: synth.clientX, y: synth.clientY };
             updateViewBox(); render(false); return;
@@ -819,41 +752,33 @@
         if (resizingSiteId) {
             const site = sites.find(s => s.id === resizingSiteId);
             if (site) {
-                const sp = snapPoint(currentMousePos);
-                site.w = Math.max(80, sp.x - site.x);
-                site.h = Math.max(80, sp.y - site.y);
-                render(false);
-            }
-            return;
+                const sp = snapPoint(currentMousePos, true);
+                site.w = Math.max(GRID_SIZE, sp.x - site.x); site.h = Math.max(GRID_SIZE, sp.y - site.y); render(false);
+            } return;
         }
         if (isDrawingSite && mode === 'site') {
-            const sp = snapPoint(currentMousePos);
-            const as = sites[sites.length-1];
+            const sp = snapPoint(currentMousePos, true); const as = sites[sites.length-1];
             as.x=Math.min(startPos.x, sp.x); as.y=Math.min(startPos.y, sp.y);
-            as.w=Math.abs(sp.x-startPos.x); as.h=Math.abs(sp.y-startPos.y);
-            render(false); return;
+            as.w=Math.abs(sp.x-startPos.x); as.h=Math.abs(sp.y-startPos.y); render(false); return;
         }
         if (isDragging && mode === 'select' && dragStartMousePos) {
-            const dx = currentMousePos.x - dragStartMousePos.x;
-            const dy = currentMousePos.y - dragStartMousePos.y;
+            const dx = currentMousePos.x - dragStartMousePos.x, dy = currentMousePos.y - dragStartMousePos.y;
             if (Math.abs(dx)>2||Math.abs(dy)>2) hasMoved = true;
             const snap = document.getElementById('chk-snap')?.checked;
             dragStartSites.forEach((sp,id) => {
                 const s = sites.find(x=>x.id===id);
-                if (s) { s.x=sp.x+dx; s.y=sp.y+dy; if(snap){s.x=Math.round(s.x/20)*20;s.y=Math.round(s.y/20)*20;} }
+                if (s) { if(snap){ s.x = Math.round((sp.x+dx)/GRID_SIZE)*GRID_SIZE; s.y = Math.round((sp.y+dy)/GRID_SIZE)*GRID_SIZE; } else { s.x = sp.x+dx; s.y = sp.y+dy; } }
             });
             dragStartNodes.forEach((sp,id) => {
                 const n = nodes.find(x=>x.id===id);
-                if (n) { n.x=sp.x+dx; n.y=sp.y+dy; if(snap){n.x=Math.round(n.x/20)*20;n.y=Math.round(n.y/20)*20;} }
+                if (n) { if(snap){ n.x = Math.round((sp.x+dx-BOX_MARGIN)/GRID_SIZE)*GRID_SIZE + BOX_MARGIN; n.y = Math.round((sp.y+dy-BOX_MARGIN)/GRID_SIZE)*GRID_SIZE + BOX_MARGIN; } else { n.x = sp.x+dx; n.y = sp.y+dy; } }
             });
             if (hasMoved) render(false);
         } else if (mode === 'connect' && connectingFromId) {
             const pl = document.getElementById('preview-line');
             if (pl) { pl.setAttribute('x2', currentMousePos.x); pl.setAttribute('y2', currentMousePos.y); }
-            // Also move the end-dot — re-render is lightweight here
             render(false);
         } else if (mode === 'place' || mode === 'site') {
-            // Ghost follows cursor — re-render to update position
             render(false);
         }
     }
@@ -867,168 +792,66 @@
         isDragging=false; hasMoved=false; lastMousePos=null; dragStartMousePos=null;
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  MOUSE EVENTS
-    // ═══════════════════════════════════════════════════════
     svg.addEventListener('contextmenu', e => e.preventDefault());
-
     svg.addEventListener('mousedown', e => {
-        const isBg = e.target===svg || e.target.tagName==='svg' ||
-            ['layer-edges','layer-sites','layer-nodes','layer-grid'].includes(e.target.id);
-        if (e.button===2) {
-            // Right-click always pans (non-viewer); viewer uses left-click bg for pan (handled in pointerDown)
-            if (!IS_VIEWER) { isPanning=true; svg.style.cursor=CURSOR_GRABBING; lastMousePos={x:e.clientX,y:e.clientY}; }
-            return;
-        }
+        const isBg = e.target===svg || e.target.tagName==='svg' || ['layer-edges','layer-sites','layer-nodes','layer-grid'].includes(e.target.id);
+        if (e.button===2) { if (!IS_VIEWER) { isPanning=true; svg.style.cursor=CURSOR_GRABBING; lastMousePos={x:e.clientX,y:e.clientY}; } return; }
         if (e.button!==0) return;
         pointerDown(e, isBg);
     });
-
     window.addEventListener('mousemove', e => { pointerMove(e); });
     window.addEventListener('mouseup',   e => { if(e.button===0) pointerUp(); });
 
     window.addEventListener('wheel', e => {
-        if (e.target!==svg && e.target.tagName!=='rect' && e.target.tagName!=='line' &&
-            e.target.tagName!=='text' && e.target.tagName!=='svg') return;
-        if (e.ctrlKey||e.metaKey) return;
-        e.preventDefault();
+        if (e.target!==svg && e.target.tagName!=='rect' && e.target.tagName!=='line' && e.target.tagName!=='text' && e.target.tagName!=='svg') return;
+        if (e.ctrlKey||e.metaKey) return; e.preventDefault();
         const pt=svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY;
         const sp=pt.matrixTransform(svg.getScreenCTM().inverse());
-        const factor = e.deltaY>0 ? 1.1 : 0.9;
-        const oldScale = zoomScale;
-        zoomScale=Math.max(0.1,Math.min(zoomScale*factor,10));
-        const rect=svg.getBoundingClientRect();
-        vbW=rect.width*zoomScale; vbH=rect.height*zoomScale;
-        vbX=sp.x-((e.clientX-rect.left)/rect.width)*vbW;
-        vbY=sp.y-((e.clientY-rect.top)/rect.height)*vbH;
+        const factor = e.deltaY>0 ? 1.1 : 0.9; const oldScale = zoomScale; zoomScale=Math.max(0.1,Math.min(zoomScale*factor,10));
+        const rect=svg.getBoundingClientRect(); vbW=rect.width*zoomScale; vbH=rect.height*zoomScale;
+        vbX=sp.x-((e.clientX-rect.left)/rect.width)*vbW; vbY=sp.y-((e.clientY-rect.top)/rect.height)*vbH;
         updateViewBox();
-        if (!IS_VIEWER && connectingFromId && mode==='connect') {
-            const pl=document.getElementById('preview-line');
-            if(pl){pl.setAttribute('x2',currentMousePos.x);pl.setAttribute('y2',currentMousePos.y);}
-        }
+        if (!IS_VIEWER && connectingFromId && mode==='connect') { const pl=document.getElementById('preview-line'); if(pl){pl.setAttribute('x2',currentMousePos.x);pl.setAttribute('y2',currentMousePos.y);} }
         render(false);
     }, { passive:false });
 
-    // ═══════════════════════════════════════════════════════
-    //  TOUCH EVENTS
-    // ═══════════════════════════════════════════════════════
-    function cancelLongPress() {
-        clearTimeout(longPressTimer); longPressTimer=null;
-        lpRing.classList.remove('animating'); lpRing.style.display='none';
-    }
+    function cancelLongPress() { clearTimeout(longPressTimer); longPressTimer=null; lpRing.classList.remove('animating'); lpRing.style.display='none'; }
 
     svg.addEventListener('touchstart', e => {
-        e.preventDefault();
-        Array.from(e.changedTouches).forEach(t => activeTouches.set(t.identifier, {clientX:t.clientX,clientY:t.clientY}));
-
-        if (activeTouches.size === 2) {
-            // Start pinch
-            cancelLongPress(); isPanning=false; isDragging=false;
-            const tArr = Array.from(activeTouches.values());
-            pinchStartDist = Math.hypot(tArr[0].clientX-tArr[1].clientX, tArr[0].clientY-tArr[1].clientY);
-            pinchStartScale = zoomScale;
-            pinchStartVbX = vbX; pinchStartVbY = vbY;
-            return;
-        }
-
+        e.preventDefault(); Array.from(e.changedTouches).forEach(t => activeTouches.set(t.identifier, {clientX:t.clientX,clientY:t.clientY}));
+        if (activeTouches.size === 2) { cancelLongPress(); isPanning=false; isDragging=false; const tArr = Array.from(activeTouches.values()); pinchStartDist = Math.hypot(tArr[0].clientX-tArr[1].clientX, tArr[0].clientY-tArr[1].clientY); pinchStartScale = zoomScale; pinchStartVbX = vbX; pinchStartVbY = vbY; return; }
         if (activeTouches.size > 2) { cancelLongPress(); return; }
-
-        // Single touch
-        const t = e.changedTouches[0];
-        const synth = touchToMouse(t, 'touchstart');
-        const isBg = e.target===svg || e.target.tagName==='svg' ||
-            ['layer-edges','layer-sites','layer-nodes','layer-grid'].includes(e.target.id);
-
-        if (isBg && !IS_VIEWER && mode === 'select') {
-            // Long-press on background = pan (already handled by pointerDown → isPanning)
-            // Show long-press ring for potential future delete action on items via item handlers
-        }
-
-        // Long press on background when nothing selected = nothing special
-        // Long press on background with selection = could delete, but we handle that via item long press
-        pointerDown(synth, isBg);
-        lastMousePos = { x: t.clientX, y: t.clientY };
+        const t = e.changedTouches[0]; const synth = touchToMouse(t, 'touchstart');
+        const isBg = e.target===svg || e.target.tagName==='svg' || ['layer-edges','layer-sites','layer-nodes','layer-grid'].includes(e.target.id);
+        pointerDown(synth, isBg); lastMousePos = { x: t.clientX, y: t.clientY };
     }, { passive:false });
 
     svg.addEventListener('touchmove', e => {
-        e.preventDefault();
-        Array.from(e.changedTouches).forEach(t => {
-            if (activeTouches.has(t.identifier)) activeTouches.set(t.identifier, {clientX:t.clientX,clientY:t.clientY});
-        });
-
+        e.preventDefault(); Array.from(e.changedTouches).forEach(t => { if (activeTouches.has(t.identifier)) activeTouches.set(t.identifier, {clientX:t.clientX,clientY:t.clientY}); });
         if (activeTouches.size === 2) {
-            cancelLongPress();
-            const tArr = Array.from(activeTouches.values());
-            const newDist = Math.hypot(tArr[0].clientX-tArr[1].clientX, tArr[0].clientY-tArr[1].clientY);
-            const factor = newDist / pinchStartDist;
-            const newScale = Math.max(0.1, Math.min(pinchStartScale / factor, 10));
-
-            // Pinch center in screen coords
-            const cx = (tArr[0].clientX + tArr[1].clientX) / 2;
-            const cy = (tArr[0].clientY + tArr[1].clientY) / 2;
-            const rect = svg.getBoundingClientRect();
-
-            zoomScale = newScale;
-            vbW = rect.width * zoomScale; vbH = rect.height * zoomScale;
-            // Keep the pinch center stable in diagram coords
-            const pt = svg.createSVGPoint(); pt.x=cx; pt.y=cy;
-            // Recalculate from pinch start state for stability
-            const diagCx = pinchStartVbX + ((cx-rect.left)/rect.width)*(rect.width*pinchStartScale);
-            const diagCy = pinchStartVbY + ((cy-rect.top)/rect.height)*(rect.height*pinchStartScale);
-            vbX = diagCx - ((cx-rect.left)/rect.width)*vbW;
-            vbY = diagCy - ((cy-rect.top)/rect.height)*vbH;
-            updateViewBox(); render(false); return;
+            cancelLongPress(); const tArr = Array.from(activeTouches.values()); const newDist = Math.hypot(tArr[0].clientX-tArr[1].clientX, tArr[0].clientY-tArr[1].clientY); const factor = newDist / pinchStartDist; const newScale = Math.max(0.1, Math.min(pinchStartScale / factor, 10));
+            const cx = (tArr[0].clientX + tArr[1].clientX) / 2; const cy = (tArr[0].clientY + tArr[1].clientY) / 2; const rect = svg.getBoundingClientRect();
+            zoomScale = newScale; vbW = rect.width * zoomScale; vbH = rect.height * zoomScale;
+            const diagCx = pinchStartVbX + ((cx-rect.left)/rect.width)*(rect.width*pinchStartScale); const diagCy = pinchStartVbY + ((cy-rect.top)/rect.height)*(rect.height*pinchStartScale);
+            vbX = diagCx - ((cx-rect.left)/rect.width)*vbW; vbY = diagCy - ((cy-rect.top)/rect.height)*vbH; updateViewBox(); render(false); return;
         }
-
-        if (activeTouches.size !== 1) return;
-        cancelLongPress();
-        const t = e.changedTouches[0];
-        pointerMove(touchToMouse(t, 'touchmove'));
+        if (activeTouches.size !== 1) return; cancelLongPress(); const t = e.changedTouches[0]; pointerMove(touchToMouse(t, 'touchmove'));
     }, { passive:false });
 
-    svg.addEventListener('touchend', e => {
-        e.preventDefault();
-        cancelLongPress();
-        Array.from(e.changedTouches).forEach(t => activeTouches.delete(t.identifier));
-        if (activeTouches.size === 0) pointerUp();
-    }, { passive:false });
+    svg.addEventListener('touchend', e => { e.preventDefault(); cancelLongPress(); Array.from(e.changedTouches).forEach(t => activeTouches.delete(t.identifier)); if (activeTouches.size === 0) pointerUp(); }, { passive:false });
+    svg.addEventListener('touchcancel', e => { cancelLongPress(); Array.from(e.changedTouches).forEach(t => activeTouches.delete(t.identifier)); if (activeTouches.size === 0) pointerUp(); }, { passive:false });
 
-    svg.addEventListener('touchcancel', e => {
-        cancelLongPress();
-        Array.from(e.changedTouches).forEach(t => activeTouches.delete(t.identifier));
-        if (activeTouches.size === 0) pointerUp();
-    }, { passive:false });
-
-    // ═══════════════════════════════════════════════════════
-    //  KEYBOARD
-    // ═══════════════════════════════════════════════════════
     window.addEventListener('keydown', e => {
-        if (!e.key || IS_VIEWER) return;
-        if (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+        if (!e.key || IS_VIEWER) return; if (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
         if (e.ctrlKey||e.metaKey) {
             if (e.key.toLowerCase()==='a') { e.preventDefault(); setMode('select'); selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); nodes.forEach(n=>selectedNodes.add(n.id)); edges.forEach(ed=>selectedEdges.add(ed.id)); sites.forEach(s=>selectedSites.add(s.id)); render(); return; }
             if (e.key.toLowerCase()==='z') { e.preventDefault(); undo(); return; }
             if (e.key.toLowerCase()==='y') { e.preventDefault(); redo(); return; }
         }
         if (e.key==='Escape') { if(resizingSiteId){resizingSiteId=null;pushHistory();render();} setMode('select'); }
-        if (e.key.toLowerCase()==='s') setMode('select');
-        if (e.key.toLowerCase()==='c') setMode('connect');
+        if (e.key.toLowerCase()==='s') setMode('select'); if (e.key.toLowerCase()==='c') setMode('connect');
         if (e.key==='Delete'||e.key==='Backspace') deleteSelected();
     });
-
-    // ═══════════════════════════════════════════════════════
-    //  ITEM INTERACTION  (shared mouse+touch)
-    // ═══════════════════════════════════════════════════════
-    function beginItemDrag(id, type, clientX, clientY) {
-        const isMultiSelect = false; // touch always single-selects on first touch
-        const collection = type==='node' ? selectedNodes : selectedSites;
-        if (!collection.has(id)) {
-            selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
-            collection.add(id);
-        }
-        _setupDragState(clientX, clientY);
-        isDragging=true; hasMoved=false;
-    }
 
     function _setupDragState(clientX, clientY) {
         dragStartNodes.clear(); dragStartSites.clear(); draggedChildrenNodes.clear(); draggedChildrenSites.clear();
@@ -1048,15 +871,12 @@
 
     function handleItemMouseDown(e, id, type) {
         if (IS_VIEWER && e.button===2) {
-            e.stopPropagation();
-            let txt='';
+            e.stopPropagation(); let txt='';
             if (type==='node'){const n=nodes.find(x=>x.id===id);if(n)txt=`Name:${n.name||'N/A'}\nIP:${n.ip||'N/A'}\nNotes:${n.notes||'None'}`;}
             else if(type==='site'){const s=sites.find(x=>x.id===id);if(s)txt=`Site:${s.name||'N/A'}\nNotes:${s.notes||'None'}`;}
-            navigator.clipboard.writeText(txt).then(()=>triggerToast('✓ Copied'));
-            return;
+            navigator.clipboard.writeText(txt).then(()=>triggerToast('✓ Copied')); return;
         }
-        if (e.button===2) return;
-        e.stopPropagation();
+        if (e.button===2) return; e.stopPropagation();
 
         if (IS_VIEWER) {
             selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
@@ -1066,99 +886,45 @@
         if (resizingSiteId) { resizingSiteId=null; pushHistory(); render(); return; }
 
         if (mode==='select') {
-            const isMulti = e.shiftKey||e.ctrlKey||e.metaKey;
-            const col = type==='node' ? selectedNodes : selectedSites;
+            const isMulti = e.shiftKey||e.ctrlKey||e.metaKey; const col = type==='node' ? selectedNodes : selectedSites;
             if (isMulti) { if(col.has(id)) col.delete(id); else col.add(id); }
             else { if(!col.has(id)){ selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); col.add(id); } }
-            _setupDragState(e.clientX, e.clientY);
-            isDragging=true; hasMoved=false;
-            dragStartMousePos = getMousePos(e);
-            render();
+            _setupDragState(e.clientX, e.clientY); isDragging=true; hasMoved=false; dragStartMousePos = getMousePos(e); render();
         } else if (mode==='connect' && type==='node') {
             if (!connectingFromId) connectingFromId=id;
-            else if (connectingFromId!==id) {
-                edges.push({id:generateId(),source:connectingFromId,target:id,sourceLabel:'',targetLabel:'',type:selectedCableType,label:'',notes:''});
-                connectingFromId=null; pushHistory();
-            }
+            else if (connectingFromId!==id) { edges.push({id:generateId(),source:connectingFromId,target:id,sourceLabel:'',targetLabel:'',type:selectedCableType,label:'',notes:''}); connectingFromId=null; pushHistory(); }
             render();
         }
     }
 
     function handleItemTouchStart(e, id, type) {
-        e.preventDefault(); e.stopPropagation();
-        Array.from(e.changedTouches).forEach(t => activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY}));
-
-        if (activeTouches.size >= 2) { cancelLongPress(); return; }
-        const t = e.changedTouches[0];
-
-        if (IS_VIEWER) {
-            selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
-            if(type==='node') selectedNodes.add(id); else if(type==='site') selectedSites.add(id);
-            render(false); showViewerPopup(id, type, t.clientX, t.clientY); return;
-        }
-
-        if (mode==='connect' && type==='node') {
-            // Handled on touchend to avoid accidental connects while dragging
-            lastMousePos={x:t.clientX,y:t.clientY};
-            return;
-        }
-
+        e.preventDefault(); e.stopPropagation(); Array.from(e.changedTouches).forEach(t => activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY}));
+        if (activeTouches.size >= 2) { cancelLongPress(); return; } const t = e.changedTouches[0];
+        if (IS_VIEWER) { selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); if(type==='node') selectedNodes.add(id); else if(type==='site') selectedSites.add(id); render(false); showViewerPopup(id, type, t.clientX, t.clientY); return; }
+        if (mode==='connect' && type==='node') { lastMousePos={x:t.clientX,y:t.clientY}; return; }
         if (mode==='select' || mode==='place') {
-            // Select on touch start
             if (mode==='select') {
                 const col = type==='node' ? selectedNodes : selectedSites;
                 if (!col.has(id)) { selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); col.add(id); }
-                _setupDragState(t.clientX, t.clientY);
-                isDragging=true; hasMoved=false;
-                dragStartMousePos = getMousePos({clientX:t.clientX, clientY:t.clientY});
-                render();
+                _setupDragState(t.clientX, t.clientY); isDragging=true; hasMoved=false; dragStartMousePos = getMousePos({clientX:t.clientX, clientY:t.clientY}); render();
             }
-
-            // Snapshot hasMoved NOW — don't capture it in the closure or a prior drag's true will suppress the sheet
-            hasMoved = false;
-            const lpx = t.clientX, lpy = t.clientY;
-            lpRing.style.left = lpx + 'px'; lpRing.style.top = lpy + 'px';
-            lpRing.style.display = 'block';
-            lpRing.classList.remove('animating');
-            void lpRing.offsetWidth; // reflow
-            lpRing.classList.add('animating');
-
-            longPressTimer = setTimeout(() => {
-                lpRing.style.display='none';
-                if (!hasMoved) openMobileProps();
-            }, LONG_PRESS_MS);
-        }
-        lastMousePos={x:t.clientX,y:t.clientY};
+            hasMoved = false; const lpx = t.clientX, lpy = t.clientY; lpRing.style.left = lpx + 'px'; lpRing.style.top = lpy + 'px'; lpRing.style.display = 'block'; lpRing.classList.remove('animating'); void lpRing.offsetWidth; lpRing.classList.add('animating');
+            longPressTimer = setTimeout(() => { lpRing.style.display='none'; if (!hasMoved) openMobileProps(); }, LONG_PRESS_MS);
+        } lastMousePos={x:t.clientX,y:t.clientY};
     }
 
     function handleItemTouchEnd(e, id, type) {
-        e.preventDefault(); e.stopPropagation();
-        cancelLongPress();
-        Array.from(e.changedTouches).forEach(t => activeTouches.delete(t.identifier));
-
+        e.preventDefault(); e.stopPropagation(); cancelLongPress(); Array.from(e.changedTouches).forEach(t => activeTouches.delete(t.identifier));
         if (mode==='connect' && type==='node' && !hasMoved) {
-            if (!connectingFromId) {
-                connectingFromId = id;
-                selectedNodes.clear(); selectedNodes.add(id);
-                render();
-            } else if (connectingFromId !== id) {
-                edges.push({id:generateId(),source:connectingFromId,target:id,sourceLabel:'',targetLabel:'',type:selectedCableType,label:'',notes:''});
-                connectingFromId=null; pushHistory();
-                render();
-            }
+            if (!connectingFromId) { connectingFromId = id; selectedNodes.clear(); selectedNodes.add(id); render(); }
+            else if (connectingFromId !== id) { edges.push({id:generateId(),source:connectingFromId,target:id,sourceLabel:'',targetLabel:'',type:selectedCableType,label:'',notes:''}); connectingFromId=null; pushHistory(); render(); }
         }
         if (activeTouches.size===0) pointerUp();
     }
 
     function selectEdge(e, edgeId) {
-        if (IS_VIEWER && e.button===2) {
-            e.stopPropagation();
-            const edge=edges.find(x=>x.id===edgeId);
-            if(edge){const cp=cableTypes[edge.type]||cableTypes['1GbE'];navigator.clipboard.writeText(`Type:${cp.name}\nLabel:${edge.label||'None'}\nNotes:${edge.notes||'None'}`).then(()=>triggerToast('✓ Copied'));}
-            return;
-        }
-        if (e.button===2) return;
-        e.stopPropagation();
+        if (IS_VIEWER && e.button===2) { e.stopPropagation(); const edge=edges.find(x=>x.id===edgeId); if(edge){const cp=cableTypes[edge.type]||cableTypes['1GbE'];navigator.clipboard.writeText(`Type:${cp.name}\nLabel:${edge.label||'None'}\nNotes:${edge.notes||'None'}`).then(()=>triggerToast('✓ Copied'));} return; }
+        if (e.button===2) return; e.stopPropagation();
         if (IS_VIEWER) { selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); selectedEdges.add(edgeId); render(false); showViewerPopup(edgeId,'edge',e.clientX,e.clientY); return; }
         if (mode==='select') {
             const isMulti = e.shiftKey||e.ctrlKey||e.metaKey;
@@ -1169,108 +935,48 @@
     }
 
     function selectEdgeTouch(e, edgeId) {
-        e.preventDefault(); e.stopPropagation();
-        Array.from(e.changedTouches).forEach(t => activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY}));
-        if (mode==='select') {
-            selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); selectedEdges.add(edgeId);
-            render();
-            longPressTimer = setTimeout(() => { if(!hasMoved) openMobileProps(); }, LONG_PRESS_MS);
-        }
+        e.preventDefault(); e.stopPropagation(); Array.from(e.changedTouches).forEach(t => activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY}));
+        if (mode==='select') { selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); selectedEdges.add(edgeId); render(); longPressTimer = setTimeout(() => { if(!hasMoved) openMobileProps(); }, LONG_PRESS_MS); }
         lastMousePos={x:e.changedTouches[0].clientX, y:e.changedTouches[0].clientY};
     }
 
     function deleteSelected() {
-        if (IS_VIEWER) return;
-        infoTooltip.style.display='none';
+        if (IS_VIEWER) return; infoTooltip.style.display='none';
         if (selectedNodes.size||selectedEdges.size||selectedSites.size) {
-            nodes = nodes.filter(n=>!selectedNodes.has(n.id));
-            sites = sites.filter(s=>!selectedSites.has(s.id));
+            nodes = nodes.filter(n=>!selectedNodes.has(n.id)); sites = sites.filter(s=>!selectedSites.has(s.id));
             edges = edges.filter(e=>!selectedEdges.has(e.id)&&!selectedNodes.has(e.source)&&!selectedNodes.has(e.target));
-            selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
-            pushHistory(); render();
+            selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); pushHistory(); render();
         }
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  MOBILE PROPERTIES SHEET
-    // ═══════════════════════════════════════════════════════
     function openMobileProps() {
-        // Show sheet on any touch-capable device, not just narrow screens
         if (!navigator.maxTouchPoints && !window.matchMedia('(pointer: coarse)').matches) return;
         const sheet = document.getElementById('mobile-props-sheet');
-        const hasSelection = selectedNodes.size===1||selectedEdges.size===1||selectedSites.size===1;
-        if (!hasSelection) return;
+        const hasSelection = selectedNodes.size===1||selectedEdges.size===1||selectedSites.size===1; if (!hasSelection) return;
 
-        // Populate fields from selection
         if (selectedNodes.size===1) {
-            const node = nodes.find(n=>n.id===Array.from(selectedNodes)[0]);
-            if (!node) return;
-            document.getElementById('mps-title').firstChild.textContent = '⚙️ Device: ';
-            document.getElementById('mps-lbl-1').textContent = 'Device Name';
-            document.getElementById('mps-prop-1').value = node.name||'';
-            document.getElementById('mps-lbl-2').textContent = 'IP / Subnet';
-            document.getElementById('mps-prop-2').value = node.ip||'';
-            document.getElementById('mps-group-3').style.display='none';
-            document.getElementById('mps-lbl-4').textContent = 'Notes';
-            document.getElementById('mps-prop-4').value = node.notes||'';
-            document.getElementById('mps-group-2').style.display='block';
+            const node = nodes.find(n=>n.id===Array.from(selectedNodes)[0]); if (!node) return;
+            document.getElementById('mps-title').firstChild.textContent = '⚙️ Device: '; document.getElementById('mps-lbl-1').textContent = 'Device Name'; document.getElementById('mps-prop-1').value = node.name||''; document.getElementById('mps-lbl-2').textContent = 'IP / Subnet'; document.getElementById('mps-prop-2').value = node.ip||''; document.getElementById('mps-group-3').style.display='none'; document.getElementById('mps-lbl-4').textContent = 'Notes'; document.getElementById('mps-prop-4').value = node.notes||''; document.getElementById('mps-group-2').style.display='block';
         } else if (selectedSites.size===1) {
-            const site = sites.find(s=>s.id===Array.from(selectedSites)[0]);
-            if (!site) return;
-            document.getElementById('mps-title').firstChild.textContent = '🔲 Site: ';
-            document.getElementById('mps-lbl-1').textContent = 'Site Name';
-            document.getElementById('mps-prop-1').value = site.name||'';
-            document.getElementById('mps-group-2').style.display='none';
-            document.getElementById('mps-group-3').style.display='none';
-            document.getElementById('mps-lbl-4').textContent = 'Notes';
-            document.getElementById('mps-prop-4').value = site.notes||'';
+            const site = sites.find(s=>s.id===Array.from(selectedSites)[0]); if (!site) return;
+            document.getElementById('mps-title').firstChild.textContent = '🔲 Site: '; document.getElementById('mps-lbl-1').textContent = 'Site Name'; document.getElementById('mps-prop-1').value = site.name||''; document.getElementById('mps-group-2').style.display='none'; document.getElementById('mps-group-3').style.display='none'; document.getElementById('mps-lbl-4').textContent = 'Notes'; document.getElementById('mps-prop-4').value = site.notes||'';
         } else if (selectedEdges.size===1) {
-            const edge = edges.find(ed=>ed.id===Array.from(selectedEdges)[0]);
-            if (!edge) return;
-            document.getElementById('mps-title').firstChild.textContent = '🔗 Connection: ';
-            document.getElementById('mps-lbl-1').textContent = 'Label';
-            document.getElementById('mps-prop-1').value = edge.label||'';
-            document.getElementById('mps-lbl-2').textContent = 'Source Port';
-            document.getElementById('mps-prop-2').value = edge.sourceLabel||'';
-            document.getElementById('mps-group-2').style.display='block';
-            document.getElementById('mps-lbl-3').textContent = 'Target Port';
-            document.getElementById('mps-prop-3').value = edge.targetLabel||'';
-            document.getElementById('mps-group-3').style.display='block';
-            document.getElementById('mps-lbl-4').textContent = 'Notes';
-            document.getElementById('mps-prop-4').value = edge.notes||'';
+            const edge = edges.find(ed=>ed.id===Array.from(selectedEdges)[0]); if (!edge) return;
+            document.getElementById('mps-title').firstChild.textContent = '🔗 Connection: '; document.getElementById('mps-lbl-1').textContent = 'Label'; document.getElementById('mps-prop-1').value = edge.label||''; document.getElementById('mps-lbl-2').textContent = 'Source Port'; document.getElementById('mps-prop-2').value = edge.sourceLabel||''; document.getElementById('mps-group-2').style.display='block'; document.getElementById('mps-lbl-3').textContent = 'Target Port'; document.getElementById('mps-prop-3').value = edge.targetLabel||''; document.getElementById('mps-group-3').style.display='block'; document.getElementById('mps-lbl-4').textContent = 'Notes'; document.getElementById('mps-prop-4').value = edge.notes||'';
         }
-
-        sheet.style.display='flex'; sheet.style.flexDirection='column';
-        document.getElementById('fab-edit').classList.remove('visible');
-        requestAnimationFrame(() => { sheet.classList.add('open'); updateSheetPosition(); });
+        sheet.style.display='flex'; sheet.style.flexDirection='column'; document.getElementById('fab-edit').classList.remove('visible'); requestAnimationFrame(() => { sheet.classList.add('open'); updateSheetPosition(); });
     }
 
-    function closeMobileProps() {
-        const sheet = document.getElementById('mobile-props-sheet');
-        sheet.classList.remove('open');
-        sheet.style.bottom = '0';
-        setTimeout(() => { sheet.style.display='none'; updateFab(); }, 300);
-    }
+    function closeMobileProps() { const sheet = document.getElementById('mobile-props-sheet'); sheet.classList.remove('open'); sheet.style.bottom = '0'; setTimeout(() => { sheet.style.display='none'; updateFab(); }, 300); }
 
-    // ═══════════════════════════════════════════════════════
-    //  SIDEBAR (desktop only)
-    // ═══════════════════════════════════════════════════════
     const sidebar = document.getElementById('sidebar');
 
-    // ── FAB visibility ──
     function updateFab() {
-        const fab = document.getElementById('fab-edit');
-        if (!fab) return;
-        // Only show on touch devices
+        const fab = document.getElementById('fab-edit'); if (!fab) return;
         const isTouch = navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
         const hasSelection = selectedNodes.size > 0 || selectedEdges.size > 0 || selectedSites.size > 0;
-        // Single selection = Edit; multi = just Delete is enough, no sheet
         const isSingle = (selectedNodes.size + selectedEdges.size + selectedSites.size) === 1;
-        if (isTouch && hasSelection && isSingle && !IS_VIEWER) {
-            fab.classList.add('visible');
-        } else {
-            fab.classList.remove('visible');
-        }
+        if (isTouch && hasSelection && isSingle && !IS_VIEWER) { fab.classList.add('visible'); } else { fab.classList.remove('visible'); }
     }
 
     function updateSidebarUI() {
@@ -1300,43 +1006,25 @@
 
     function updateActiveProp(fieldNum, value) {
         if (IS_VIEWER) return;
-        // Sync desktop ↔ mobile prop fields
         const desktopId = `prop-${fieldNum}`, mobileId = `mps-prop-${fieldNum}`;
         const desk = document.getElementById(desktopId), mob = document.getElementById(mobileId);
-        if (document.activeElement === desk && mob) mob.value = value;
-        if (document.activeElement === mob && desk) desk.value = value;
-
-        if (selectedNodes.size===1&&selectedSites.size===0&&selectedEdges.size===0) {
-            const node=nodes.find(n=>n.id===Array.from(selectedNodes)[0]);
-            if(node){if(fieldNum===1)node.name=value;else if(fieldNum===2)node.ip=value;else if(fieldNum===4)node.notes=value;render(false);}
-        } else if (selectedSites.size===1&&selectedNodes.size===0&&selectedEdges.size===0) {
-            const site=sites.find(s=>s.id===Array.from(selectedSites)[0]);
-            if(site){if(fieldNum===1)site.name=value;else if(fieldNum===4)site.notes=value;render(false);}
-        } else if (selectedEdges.size===1&&selectedNodes.size===0&&selectedSites.size===0) {
-            const edge=edges.find(ed=>ed.id===Array.from(selectedEdges)[0]);
-            if(edge){if(fieldNum===1)edge.label=value;else if(fieldNum===2)edge.sourceLabel=value;else if(fieldNum===3)edge.targetLabel=value;else if(fieldNum===4)edge.notes=value;render(false);}
-        }
+        if (document.activeElement === desk && mob) mob.value = value; if (document.activeElement === mob && desk) desk.value = value;
+        if (selectedNodes.size===1&&selectedSites.size===0&&selectedEdges.size===0) { const node=nodes.find(n=>n.id===Array.from(selectedNodes)[0]); if(node){if(fieldNum===1)node.name=value;else if(fieldNum===2)node.ip=value;else if(fieldNum===4)node.notes=value;render(false);} }
+        else if (selectedSites.size===1&&selectedNodes.size===0&&selectedEdges.size===0) { const site=sites.find(s=>s.id===Array.from(selectedSites)[0]); if(site){if(fieldNum===1)site.name=value;else if(fieldNum===4)site.notes=value;render(false);} }
+        else if (selectedEdges.size===1&&selectedNodes.size===0&&selectedSites.size===0) { const edge=edges.find(ed=>ed.id===Array.from(selectedEdges)[0]); if(edge){if(fieldNum===1)edge.label=value;else if(fieldNum===2)edge.sourceLabel=value;else if(fieldNum===3)edge.targetLabel=value;else if(fieldNum===4)edge.notes=value;render(false);} }
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  VIEWER POPUP
-    // ═══════════════════════════════════════════════════════
     function showViewerPopup(id, type, x, y) {
-        const popup=document.getElementById('viewer-popup');
-        const title=document.getElementById('vp-title');
-        const content=document.getElementById('vp-content');
-        let infoText='';
+        const popup=document.getElementById('viewer-popup'); const title=document.getElementById('vp-title'); const content=document.getElementById('vp-content'); let infoText='';
         if(type==='node'){const n=nodes.find(n=>n.id===id);title.innerText=n.name||'Unnamed';content.innerHTML=`<strong>IP:</strong> ${n.ip||'N/A'}<br/><br/><strong>Notes:</strong><br/>${(n.notes||'None').replace(/\n/g,'<br/>')}`;infoText=`Name:${n.name||'N/A'}\nIP:${n.ip||'N/A'}\nNotes:${n.notes||'None'}`;}
         else if(type==='site'){const s=sites.find(s=>s.id===id);title.innerText=s.name||'Unnamed Site';content.innerHTML=`<strong>Notes:</strong><br/>${(s.notes||'None').replace(/\n/g,'<br/>')}`;infoText=`Site:${s.name||'N/A'}\nNotes:${s.notes||'None'}`;}
         else if(type==='edge'){const ed=edges.find(e=>e.id===id);const cp=cableTypes[ed.type]||cableTypes['1GbE'];title.innerText=ed.label||cp.name;content.innerHTML=`<strong>Type:</strong> ${cp.name}<br/><br/><strong>Source:</strong> ${ed.sourceLabel||'None'}<br/><strong>Target:</strong> ${ed.targetLabel||'None'}<br/><br/><strong>Notes:</strong><br/>${(ed.notes||'None').replace(/\n/g,'<br/>')}`;infoText=`Type:${cp.name}\nNotes:${ed.notes||'None'}`;}
-        popup.style.display='flex';
-        infoTooltip.style.display='none';
-        document.getElementById('vp-copy').onclick=()=>navigator.clipboard.writeText(infoText).then(()=>triggerToast('✓ Copied'));
+        popup.style.display='flex'; infoTooltip.style.display='none'; document.getElementById('vp-copy').onclick=()=>navigator.clipboard.writeText(infoText).then(()=>triggerToast('✓ Copied'));
     }
     function closeViewerPopup() { document.getElementById('viewer-popup').style.display='none'; }
 
     // ═══════════════════════════════════════════════════════
-    //  RENDER
+    //  RENDER (Strict Block Grid Layout)
     // ═══════════════════════════════════════════════════════
     function render(refreshSidebar=true) {
         while (svg.lastChild) svg.removeChild(svg.lastChild);
@@ -1356,16 +1044,16 @@
             edges.forEach(ed=>{if(ed.source===selId){relatedNodes.add(ed.target);relatedEdges.add(ed.id);}if(ed.target===selId){relatedNodes.add(ed.source);relatedEdges.add(ed.id);}});
         }
 
-        // ── Grid ──
+        // ── Layout Grid ──
         if (!IS_VIEWER && document.getElementById('chk-grid')?.checked) {
             const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
             const pat=document.createElementNS('http://www.w3.org/2000/svg','pattern');
-            pat.setAttribute('id','grid-pattern'); pat.setAttribute('width',20); pat.setAttribute('height',20); pat.setAttribute('patternUnits','userSpaceOnUse');
+            pat.setAttribute('id','grid-pattern'); pat.setAttribute('width',GRID_SIZE); pat.setAttribute('height',GRID_SIZE); pat.setAttribute('patternUnits','userSpaceOnUse');
             const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-            path.setAttribute('d','M 20 0 L 0 0 0 20'); path.setAttribute('fill','none'); path.setAttribute('stroke','var(--grid-color)'); path.setAttribute('stroke-width','1');
+            path.setAttribute('d', `M ${GRID_SIZE} 0 L 0 0 0 ${GRID_SIZE}`); path.setAttribute('fill','none'); path.setAttribute('stroke','var(--grid-color)'); path.setAttribute('stroke-width','1');
             pat.appendChild(path); defs.appendChild(pat); layerGrid.appendChild(defs);
             const gr=document.createElementNS('http://www.w3.org/2000/svg','rect');
-            gr.setAttribute('x',vbX-1000); gr.setAttribute('y',vbY-1000); gr.setAttribute('width',vbW+2000); gr.setAttribute('height',vbH+2000);
+            gr.setAttribute('x',vbX-2000); gr.setAttribute('y',vbY-2000); gr.setAttribute('width',vbW+4000); gr.setAttribute('height',vbH+4000);
             gr.setAttribute('fill','url(#grid-pattern)'); gr.style.pointerEvents='none';
             layerGrid.appendChild(gr);
         }
@@ -1382,7 +1070,7 @@
             const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
             rect.setAttribute('x',site.x); rect.setAttribute('y',site.y);
             rect.setAttribute('width',site.w); rect.setAttribute('height',site.h);
-            rect.setAttribute('rx','10');
+            rect.setAttribute('rx','0'); // Square Corners
             rect.setAttribute('fill',isRes?'rgba(0,123,255,0.1)':'var(--site-bg)');
             rect.setAttribute('stroke',(isSel||isRes)?'#007bff':'var(--site-stroke)');
             rect.setAttribute('stroke-width',(isSel||isRes)?'3':'2');
@@ -1392,27 +1080,16 @@
             g.addEventListener('mousedown', e=>handleItemMouseDown(e,site.id,'site'));
             g.addEventListener('touchstart', e=>handleItemTouchStart(e,site.id,'site'),{passive:false});
             g.addEventListener('touchend',   e=>handleItemTouchEnd(e,site.id,'site'),{passive:false});
-            g.addEventListener('touchmove', e=>{
-                e.preventDefault();
-                Array.from(e.changedTouches).forEach(t=>{if(activeTouches.has(t.identifier))activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY});});
-                if(activeTouches.size===1){cancelLongPress();pointerMove(touchToMouse(e.changedTouches[0],'touchmove'));}
-            },{passive:false});
+            g.addEventListener('touchmove', e=>{ e.preventDefault(); Array.from(e.changedTouches).forEach(t=>{if(activeTouches.has(t.identifier))activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY});}); if(activeTouches.size===1){cancelLongPress();pointerMove(touchToMouse(e.changedTouches[0],'touchmove'));} },{passive:false});
 
             g.addEventListener('mouseenter', e=>{
                 if(document.getElementById('viewer-popup').style.display==='flex') return;
-                if(isDragging||isPanning||resizingSiteId) return;
-                if(!IS_VIEWER&&mode!=='select') return;
+                if(isDragging||isPanning||resizingSiteId) return; if(!IS_VIEWER&&mode!=='select') return;
                 const safeNotes=site.notes?site.notes.replace(/</g,'&lt;').replace(/>/g,'&gt;'):'None';
                 infoTooltip.innerHTML=`<strong style="font-size:15px;color:#4dabf7;">${site.name||'Unnamed Site'}</strong><br/><br/><span style="color:#9ab;">Notes:</span><br/>${safeNotes}`;
-                infoTooltip.style.display='block';
-                const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15;
-                infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
+                infoTooltip.style.display='block'; const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
             });
-            g.addEventListener('mousemove', e=>{
-                if(isDragging||isPanning||resizingSiteId||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;}
-                const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15;
-                infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
-            });
+            g.addEventListener('mousemove', e=>{ if(isDragging||isPanning||resizingSiteId||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;} const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
             g.addEventListener('mouseleave', ()=>infoTooltip.style.display='none');
 
             // Resize handle
@@ -1422,11 +1099,7 @@
                 handle.setAttribute('points',`${hx-16},${hy} ${hx},${hy} ${hx},${hy-16}`);
                 handle.setAttribute('fill','#007bff'); handle.style.cursor='se-resize'; handle.style.pointerEvents='all';
                 handle.addEventListener('mousedown', e=>{e.stopPropagation();if(e.button===2)return;resizingSiteId=site.id;resizeAnchor={x:site.x,y:site.y};});
-                handle.addEventListener('touchstart', e=>{
-                    e.preventDefault(); e.stopPropagation();
-                    Array.from(e.changedTouches).forEach(t=>activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY}));
-                    resizingSiteId=site.id; resizeAnchor={x:site.x,y:site.y};
-                },{passive:false});
+                handle.addEventListener('touchstart', e=>{ e.preventDefault(); e.stopPropagation(); Array.from(e.changedTouches).forEach(t=>activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY})); resizingSiteId=site.id; resizeAnchor={x:site.x,y:site.y}; },{passive:false});
                 g.appendChild(handle);
             }
 
@@ -1434,33 +1107,43 @@
             txt.setAttribute('x',site.x+15); txt.setAttribute('y',site.y+25);
             txt.setAttribute('font-family','sans-serif'); txt.setAttribute('font-size','16');
             txt.setAttribute('font-weight','bold'); txt.setAttribute('fill','var(--site-text)');
-            txt.textContent=site.name;
-            g.appendChild(txt);
-
-            layerSites.appendChild(g);
+            txt.textContent=site.name; g.appendChild(txt); layerSites.appendChild(g);
         });
 
         // ── Edges ──
+        const drawnLabels = [];
+        const isOverlapping = (r1, r2) => {
+            const pad = 3;
+            return !(r1.x + r1.w + pad <= r2.x ||
+                     r2.x + r2.w + pad <= r1.x ||
+                     r1.y + r1.h + pad <= r2.y ||
+                     r2.y + r2.h + pad <= r1.y);
+        };
+
         const edgeGroups={};
-        edges.forEach(edge=>{
-            const key=[edge.source,edge.target].sort().join('|');
-            if(!edgeGroups[key]) edgeGroups[key]=[];
-            edgeGroups[key].push(edge);
-        });
+        edges.forEach(edge=>{ const key=[edge.source,edge.target].sort().join('|'); if(!edgeGroups[key]) edgeGroups[key]=[]; edgeGroups[key].push(edge); });
         Object.values(edgeGroups).forEach(group=>{
             const count=group.length;
             group.forEach((edge,index)=>{
                 const src=nodes.find(n=>n.id===edge.source), tgt=nodes.find(n=>n.id===edge.target);
                 if(!src||!tgt) return;
-                const dx=tgt.x-src.x,dy=tgt.y-src.y,len=Math.hypot(dx,dy);
+
+                const srcForm = blockFormations[src.type] || {w:2, h:2};
+                const tgtForm = blockFormations[tgt.type] || {w:2, h:2};
+                const srcCx = src.x + (srcForm.w * GRID_SIZE - BOX_MARGIN*2) / 2;
+                const srcCy = src.y + (srcForm.h * GRID_SIZE - BOX_MARGIN*2) / 2;
+                const tgtCx = tgt.x + (tgtForm.w * GRID_SIZE - BOX_MARGIN*2) / 2;
+                const tgtCy = tgt.y + (tgtForm.h * GRID_SIZE - BOX_MARGIN*2) / 2;
+
+                const dx=tgtCx-srcCx,dy=tgtCy-srcCy,len=Math.hypot(dx,dy);
                 let nx=0,ny=0; if(len>0){nx=-dy/len;ny=dx/len;}
                 const off=(index-(count-1)/2)*20;
-                const x1=src.x+nx*off,y1=src.y+ny*off,x2=tgt.x+nx*off,y2=tgt.y+ny*off;
+                const x1=srcCx+nx*off, y1=srcCy+ny*off, x2=tgtCx+nx*off, y2=tgtCy+ny*off;
+                
                 const isSel=selectedEdges.has(edge.id),isRel=relatedEdges.has(edge.id);
                 const cp=cableTypes[edge.type]||cableTypes['1GbE'];
                 let strokeColor=cp.color,strokeWidth='3';
-                if(isSel){strokeColor='#ffc107';strokeWidth='6';}
-                else if(isRel){strokeColor='#17a2b8';strokeWidth='5';}
+                if(isSel){strokeColor='#ffc107';strokeWidth='6';} else if(isRel){strokeColor='#17a2b8';strokeWidth='5';}
 
                 const lineG=document.createElementNS('http://www.w3.org/2000/svg','g');
                 lineG.setAttribute('class','edge-hover');
@@ -1468,20 +1151,13 @@
                 lineG.style.cursor=IS_VIEWER?'pointer':(mode==='select'?'pointer':'default');
                 lineG.addEventListener('mousedown', e=>selectEdge(e,edge.id));
                 lineG.addEventListener('touchstart', e=>selectEdgeTouch(e,edge.id),{passive:false});
-                lineG.addEventListener('touchend', e=>{
-                    e.preventDefault(); e.stopPropagation(); cancelLongPress();
-                    Array.from(e.changedTouches).forEach(t=>activeTouches.delete(t.identifier));
-                    if(activeTouches.size===0) pointerUp();
-                },{passive:false});
+                lineG.addEventListener('touchend', e=>{ e.preventDefault(); e.stopPropagation(); cancelLongPress(); Array.from(e.changedTouches).forEach(t=>activeTouches.delete(t.identifier)); if(activeTouches.size===0) pointerUp(); },{passive:false});
 
                 lineG.addEventListener('mouseenter', e=>{
-                    if(isDragging||isPanning||resizingSiteId) return;
-                    if(!IS_VIEWER&&mode!=='select') return;
+                    if(isDragging||isPanning||resizingSiteId) return; if(!IS_VIEWER&&mode!=='select') return;
                     const safeNotes=edge.notes?edge.notes.replace(/</g,'&lt;').replace(/>/g,'&gt;'):'None';
                     infoTooltip.innerHTML=`<strong style="font-size:15px;color:${cp.color};">${cp.name}</strong><br/><br/><span style="color:#9ab;">Label:</span> ${edge.label||'None'}<br/><span style="color:#9ab;">Src:</span> ${edge.sourceLabel||'None'}<br/><span style="color:#9ab;">Tgt:</span> ${edge.targetLabel||'None'}<br/><br/>${safeNotes}`;
-                    infoTooltip.style.display='block';
-                    const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15;
-                    infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
+                    infoTooltip.style.display='block'; const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
                 });
                 lineG.addEventListener('mousemove', e=>{ if(isDragging||isPanning||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;} const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
                 lineG.addEventListener('mouseleave',()=>infoTooltip.style.display='none');
@@ -1496,19 +1172,12 @@
                 const ca=document.createElementNS('http://www.w3.org/2000/svg','line');
                 ca.setAttribute('x1',x1);ca.setAttribute('y1',y1);ca.setAttribute('x2',x2);ca.setAttribute('y2',y2);
                 ca.setAttribute('stroke','transparent');ca.setAttribute('stroke-width','25');
-                lineG.appendChild(ca);
-                layerEdges.appendChild(lineG);
+                lineG.appendChild(ca); layerEdges.appendChild(lineG);
 
-                // --- NEW DYNAMIC LABEL OFFSET LOGIC ---
-                // Calculate the exact bounding box size of the node to offset labels perfectly
-                const getEdgeOffset = (node) => {
-                    const isSmall = ['AP','PC','Laptop','Phone','Printer','Cloud','Generic'].includes(node.type);
-                    const scale = isSmall ? 0.8 : 1.0;
-                    const safeName = node.name||'', safeIp = node.ip||'';
-                    const bw = Math.max(isSmall ? 70 : 100, safeName.length * 7.5 + 20, safeIp.length * 6 + 20) * scale;
-                    // Note: Node Y center is shifted up slightly in SVG (-35 vs bh), we approximate safe radius
-                    const bh = (safeIp ? 80 : 65) * scale; 
-                    
+                // Precise Offset Math using standard Rectangles
+                const getEdgeOffset = (nodeForm) => {
+                    const bw = nodeForm.w * GRID_SIZE - BOX_MARGIN*2;
+                    const bh = nodeForm.h * GRID_SIZE - BOX_MARGIN*2;
                     const angle = Math.atan2(y2 - y1, x2 - x1);
                     const absCos = Math.abs(Math.cos(angle));
                     const absSin = Math.abs(Math.sin(angle));
@@ -1516,49 +1185,78 @@
                     const distX = absCos > 0.001 ? (bw / 2) / absCos : Infinity;
                     const distY = absSin > 0.001 ? (bh / 2) / absSin : Infinity;
                     
-                    // 16px extra padding away from the edge of the bounding box
-                    return Math.min(distX, distY) + 16; 
+                    return Math.min(distX, distY) + 8; // Tighter padding for blocks
                 };
 
-                const offsetSrc = getEdgeOffset(src);
-                const offsetTgt = getEdgeOffset(tgt);
+                const offsetSrc = getEdgeOffset(srcForm);
+                const offsetTgt = getEdgeOffset(tgtForm);
 
-                const half = len / 2;
-                // Clamp max distance so they don't cross center on very short lines
                 const t1 = len > 0 ? Math.min(offsetSrc / len, 0.45) : 0.5;
                 const t2 = len > 0 ? Math.max(1 - (offsetTgt / len), 0.55) : 0.5;
 
-                const drawPortLabel=(textStr,tp,isCenter=false)=>{
+                const drawPortLabel=(textStr,tp,isCenter=false, isSource=false)=>{
                     if(!textStr) return;
-                    const mx=x1+(x2-x1)*tp,my=y1+(y2-y1)*tp;
-                    // Slightly smaller text and box
-                    const tw2=textStr.length*(isCenter?6.5:5.5)+8;
+                    let mx, my, tw2, rect;
+                    let currentTp = tp;
+                    let maxAttempts = 20;
+                    
+                    // Push overlapping tags ~18px down the line iteratively
+                    const tpStep = 18 / (len > 0 ? len : 1);
+                    const dir = isCenter ? 0 : (isSource ? 1 : -1);
+
+                    for(let i=0; i<maxAttempts; i++) {
+                        mx=x1+(x2-x1)*currentTp;
+                        my=y1+(y2-y1)*currentTp;
+                        tw2=textStr.length*(isCenter?6.5:5.5)+8;
+                        rect = { x: mx-(tw2/2), y: my-8, w: tw2, h: 16 };
+                        
+                        let overlap = false;
+                        for(let dl of drawnLabels) {
+                            if(isOverlapping(rect, dl)) { overlap = true; break; }
+                        }
+                        
+                        if(!overlap || dir === 0) break;
+                        currentTp += dir * tpStep;
+                        
+                        if(isSource && currentTp > 0.48) break;
+                        if(!isSource && !isCenter && currentTp < 0.52) break;
+                    }
+                    
+                    if(rect) drawnLabels.push(rect);
+
                     const lg=document.createElementNS('http://www.w3.org/2000/svg','g');
                     lg.style.pointerEvents=(mode==='select'||IS_VIEWER)?'all':'none';
                     lg.addEventListener('mousedown',e=>selectEdge(e,edge.id));
                     const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
-                    r.setAttribute('x',mx-(tw2/2));r.setAttribute('y',my-8);r.setAttribute('width',tw2);r.setAttribute('height',16);
-                    r.setAttribute('fill','var(--box-bg)');r.setAttribute('rx','3');r.setAttribute('stroke',strokeColor);r.setAttribute('stroke-width','1.5');
+                    r.setAttribute('x',rect.x);r.setAttribute('y',rect.y);r.setAttribute('width',rect.w);r.setAttribute('height',rect.h);
+                    r.setAttribute('fill','var(--box-bg)');r.setAttribute('rx','0'); // Square Labels
+                    r.setAttribute('stroke',strokeColor);r.setAttribute('stroke-width','1.5');
                     lg.appendChild(r);
                     const t=document.createElementNS('http://www.w3.org/2000/svg','text');
                     t.setAttribute('x',mx);t.setAttribute('y',my+3);t.setAttribute('text-anchor','middle');
                     t.setAttribute('font-family','sans-serif');t.setAttribute('font-size',isCenter?'10':'9');
                     t.setAttribute('font-weight',isCenter?'bold':'normal');t.setAttribute('fill','var(--text-main)');
-                    t.textContent=textStr; lg.appendChild(t);
-                    layerLabels.appendChild(lg);
+                    t.textContent=textStr; lg.appendChild(t); layerLabels.appendChild(lg);
                 };
                 
-                drawPortLabel(edge.sourceLabel,t1); drawPortLabel(edge.targetLabel,t2); drawPortLabel(edge.label,0.5,true);
+                drawPortLabel(edge.sourceLabel,t1,false,true); 
+                drawPortLabel(edge.targetLabel,t2,false,false); 
+                drawPortLabel(edge.label,0.5,true,false);
             });
         });
 
-        // ── Nodes ──
+        // ── Nodes (Blocks) ──
         nodes.forEach(node=>{
             const isSel=selectedNodes.has(node.id),isRel=relatedNodes.has(node.id);
-            const isSmall=['AP','PC','Laptop','Phone','Printer','Cloud','Generic'].includes(node.type);
-            const scale=isSmall?0.8:1.0;
+            const form = blockFormations[node.type] || {w:2, h:2};
+            
+            // Outer dimensions using fixed structural blocks
+            const bw = form.w * GRID_SIZE - (BOX_MARGIN * 2);
+            const bh = form.h * GRID_SIZE - (BOX_MARGIN * 2);
+
             const g=document.createElementNS('http://www.w3.org/2000/svg','g');
-            g.setAttribute('transform',`translate(${node.x},${node.y}) scale(${scale})`);
+            // node.x/y represents the strict top-left coordinate drawn directly into the cell space
+            g.setAttribute('transform',`translate(${node.x},${node.y})`);
             g.setAttribute('class','node'); g.setAttribute('id',`node-${node.id}`);
             g.style.pointerEvents='all';
             g.style.cursor=IS_VIEWER?'pointer':(mode==='select'?'move':(mode==='connect'?CURSOR_CROSSHAIR:'default'));
@@ -1566,53 +1264,50 @@
             g.addEventListener('mousedown', e=>handleItemMouseDown(e,node.id,'node'));
             g.addEventListener('touchstart', e=>handleItemTouchStart(e,node.id,'node'),{passive:false});
             g.addEventListener('touchend',   e=>handleItemTouchEnd(e,node.id,'node'),{passive:false});
-            g.addEventListener('touchmove',  e=>{
-                e.preventDefault();
-                Array.from(e.changedTouches).forEach(t=>{if(activeTouches.has(t.identifier))activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY});});
-                if(activeTouches.size===1){cancelLongPress();pointerMove(touchToMouse(e.changedTouches[0],'touchmove'));}
-            },{passive:false});
+            g.addEventListener('touchmove',  e=>{ e.preventDefault(); Array.from(e.changedTouches).forEach(t=>{if(activeTouches.has(t.identifier))activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY});}); if(activeTouches.size===1){cancelLongPress();pointerMove(touchToMouse(e.changedTouches[0],'touchmove'));} },{passive:false});
 
             g.addEventListener('mouseenter', e=>{
                 if(document.getElementById('viewer-popup').style.display==='flex') return;
-                if(isDragging||isPanning||resizingSiteId) return;
-                if(!IS_VIEWER&&mode!=='select') return;
+                if(isDragging||isPanning||resizingSiteId) return; if(!IS_VIEWER&&mode!=='select') return;
                 const safeNotes=node.notes?node.notes.replace(/</g,'&lt;').replace(/>/g,'&gt;'):'None';
                 infoTooltip.innerHTML=`<strong style="font-size:15px;color:#4dabf7;">${node.name||'Unnamed'}</strong><br/><br/><span style="color:#9ab;">IP:</span> ${node.ip||'N/A'}<br/><br/>${safeNotes}`;
-                infoTooltip.style.display='block';
-                const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15;
-                infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
+                infoTooltip.style.display='block'; const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
             });
             g.addEventListener('mousemove', e=>{ if(isDragging||isPanning||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;} const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
             g.addEventListener('mouseleave',()=>infoTooltip.style.display='none');
 
             const safeName=node.name||'',safeIp=node.ip||'';
-            const bw=Math.max(isSmall?70:100,safeName.length*7.5+20,safeIp.length*6+20);
-            const bh=safeIp?80:65;
             let strokeCol='var(--stroke-color)',strokeW='2';
             if(isSel){strokeCol='#007bff';strokeW='4';} else if(isRel){strokeCol='#17a2b8';strokeW='3';}
 
             const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
-            rect.setAttribute('x',-(bw/2)); rect.setAttribute('y','-35');
-            rect.setAttribute('width',bw); rect.setAttribute('height',bh);
-            rect.setAttribute('rx','8'); rect.setAttribute('fill','var(--box-bg)');
+            rect.setAttribute('x', '0'); rect.setAttribute('y', '0');
+            rect.setAttribute('width', bw); rect.setAttribute('height', bh);
+            rect.setAttribute('rx', '0'); // Fully square borders!
+            rect.setAttribute('fill','var(--box-bg)');
             rect.setAttribute('stroke',strokeCol); rect.setAttribute('stroke-width',strokeW);
             if(isSel) rect.setAttribute('stroke-dasharray','6,4');
             if(isRel&&!isSel) rect.style.filter='drop-shadow(0px 0px 6px rgba(23,162,184,0.6))';
             g.appendChild(rect);
 
             const icon=document.createElementNS('http://www.w3.org/2000/svg','text');
-            icon.setAttribute('x','0');icon.setAttribute('y','-10');icon.setAttribute('text-anchor','middle');icon.setAttribute('font-size','20');
+            icon.setAttribute('x', bw/2); icon.setAttribute('y', bh/2 - (safeIp?6:-2));
+            icon.setAttribute('text-anchor','middle'); icon.setAttribute('font-size','22'); 
             icon.textContent=icons[node.type]||'📦'; g.appendChild(icon);
 
             const nameT=document.createElementNS('http://www.w3.org/2000/svg','text');
-            nameT.setAttribute('x','0');nameT.setAttribute('y','12');nameT.setAttribute('text-anchor','middle');
-            nameT.setAttribute('font-family','sans-serif');nameT.setAttribute('font-size','12');nameT.setAttribute('font-weight','bold');
-            nameT.setAttribute('fill','var(--text-main)');nameT.textContent=safeName; g.appendChild(nameT);
+            nameT.setAttribute('x', bw/2); nameT.setAttribute('y', bh/2 + (safeIp?10:18));
+            nameT.setAttribute('text-anchor','middle');
+            nameT.setAttribute('font-family','sans-serif'); nameT.setAttribute('font-size','10');
+            nameT.setAttribute('font-weight','bold'); nameT.setAttribute('fill','var(--text-main)');
+            nameT.textContent=safeName; g.appendChild(nameT);
 
             if(safeIp){
                 const ipT=document.createElementNS('http://www.w3.org/2000/svg','text');
-                ipT.setAttribute('x','0');ipT.setAttribute('y','28');ipT.setAttribute('text-anchor','middle');
-                ipT.setAttribute('font-family','sans-serif');ipT.setAttribute('font-size','10');ipT.setAttribute('fill','var(--text-sub)');
+                ipT.setAttribute('x', bw/2); ipT.setAttribute('y', bh/2 + 20);
+                ipT.setAttribute('text-anchor','middle');
+                ipT.setAttribute('font-family','sans-serif'); ipT.setAttribute('font-size','8');
+                ipT.setAttribute('fill','var(--text-sub)');
                 ipT.textContent=safeIp; g.appendChild(ipT);
             }
             layerNodes.appendChild(g);
@@ -1630,70 +1325,82 @@
         if(connectingFromId&&mode==='connect'){
             const src=nodes.find(n=>n.id===connectingFromId);
             if(src){
-                previewLine.setAttribute('x1',src.x);previewLine.setAttribute('y1',src.y);
-                previewLine.setAttribute('x2',currentMousePos.x);previewLine.setAttribute('y2',currentMousePos.y);
+                const srcForm = blockFormations[src.type] || {w:2, h:2};
+                const cx = src.x + (srcForm.w*GRID_SIZE-BOX_MARGIN*2)/2;
+                const cy = src.y + (srcForm.h*GRID_SIZE-BOX_MARGIN*2)/2;
+
+                previewLine.setAttribute('x1', cx); previewLine.setAttribute('y1', cy);
+                previewLine.setAttribute('x2',currentMousePos.x); previewLine.setAttribute('y2',currentMousePos.y);
                 previewLine.setAttribute('stroke',cableTypes[selectedCableType].color);
                 previewLine.setAttribute('stroke-dasharray',cableTypes[selectedCableType].dash||'5,5');
                 previewLine.style.display='block';
-                indicator.setAttribute('cx',src.x);indicator.setAttribute('cy',src.y);
+                
+                indicator.setAttribute('cx', cx); indicator.setAttribute('cy', cy);
                 indicator.setAttribute('stroke',cableTypes[selectedCableType].color);
                 indicator.style.display='block';
 
-                // Cursor-end dot so you can see exactly where the connection will land
                 const endDot=document.createElementNS('http://www.w3.org/2000/svg','circle');
                 endDot.setAttribute('cx',currentMousePos.x);endDot.setAttribute('cy',currentMousePos.y);
-                endDot.setAttribute('r','5');
-                endDot.setAttribute('fill',cableTypes[selectedCableType].color);
+                endDot.setAttribute('r','5'); endDot.setAttribute('fill',cableTypes[selectedCableType].color);
                 endDot.setAttribute('stroke','white');endDot.setAttribute('stroke-width','1.5');
-                endDot.style.pointerEvents='none';
-                layerUI.appendChild(endDot);
+                endDot.style.pointerEvents='none'; layerUI.appendChild(endDot);
             }
         }
-        previewLine.style.pointerEvents='none';
-        layerUI.appendChild(previewLine);
+        previewLine.style.pointerEvents='none'; layerUI.appendChild(previewLine);
 
-        // Place-mode ghost: icon + box anchored to crosshair
+        // Place-mode ghost fits cleanly inside its grid constraint
         if(mode==='place'&&!IS_VIEWER){
             const ghost=document.createElementNS('http://www.w3.org/2000/svg','g');
             ghost.style.pointerEvents='none'; ghost.style.opacity='0.55';
-            const isSmall=['AP','PC','Laptop','Phone','Printer','Cloud','Generic'].includes(selectedDeviceType);
-            const sc=isSmall?0.8:1.0;
-            ghost.setAttribute('transform',`translate(${currentMousePos.x},${currentMousePos.y}) scale(${sc})`);
+            
+            let px = currentMousePos.x;
+            let py = currentMousePos.y;
+            if (document.getElementById('chk-snap')?.checked) {
+                px = Math.floor(px/GRID_SIZE)*GRID_SIZE + BOX_MARGIN;
+                py = Math.floor(py/GRID_SIZE)*GRID_SIZE + BOX_MARGIN;
+            } else {
+                px -= 20; py -= 20; 
+            }
+            ghost.setAttribute('transform',`translate(${px},${py})`);
+
+            const form = blockFormations[selectedDeviceType] || {w:2, h:2};
+            const gw = form.w * GRID_SIZE - BOX_MARGIN*2;
+            const gh = form.h * GRID_SIZE - BOX_MARGIN*2;
 
             const gr=document.createElementNS('http://www.w3.org/2000/svg','rect');
-            const gw=Math.max(isSmall?70:100, selectedDeviceType.length*7.5+20);
-            gr.setAttribute('x',-(gw/2));gr.setAttribute('y','-35');
-            gr.setAttribute('width',gw);gr.setAttribute('height','65');gr.setAttribute('rx','8');
+            gr.setAttribute('x','0'); gr.setAttribute('y','0');
+            gr.setAttribute('width',gw); gr.setAttribute('height',gh);
+            gr.setAttribute('rx','0'); // Square ghost block
             gr.setAttribute('fill','var(--box-bg)');gr.setAttribute('stroke','var(--stroke-color)');gr.setAttribute('stroke-width','2');
             gr.setAttribute('stroke-dasharray','4,3');
             ghost.appendChild(gr);
 
             const gi=document.createElementNS('http://www.w3.org/2000/svg','text');
-            gi.setAttribute('x','0');gi.setAttribute('y','-10');gi.setAttribute('text-anchor','middle');
-            gi.setAttribute('font-size','20');gi.textContent=icons[selectedDeviceType]||'📦';
+            gi.setAttribute('x', gw/2); gi.setAttribute('y', gh/2 - 2); gi.setAttribute('text-anchor','middle');
+            gi.setAttribute('font-size','22'); gi.textContent=icons[selectedDeviceType]||'📦';
             ghost.appendChild(gi);
 
             const gn=document.createElementNS('http://www.w3.org/2000/svg','text');
-            gn.setAttribute('x','0');gn.setAttribute('y','12');gn.setAttribute('text-anchor','middle');
-            gn.setAttribute('font-family','sans-serif');gn.setAttribute('font-size','12');
-            gn.setAttribute('font-weight','bold');gn.setAttribute('fill','var(--text-main)');
-            gn.textContent=selectedDeviceType;
-            ghost.appendChild(gn);
+            gn.setAttribute('x', gw/2); gn.setAttribute('y', gh/2 + 18); gn.setAttribute('text-anchor','middle');
+            gn.setAttribute('font-family','sans-serif'); gn.setAttribute('font-size','10');
+            gn.setAttribute('font-weight','bold'); gn.setAttribute('fill','var(--text-main)');
+            gn.textContent=selectedDeviceType; ghost.appendChild(gn);
 
             layerUI.appendChild(ghost);
         }
 
-        // Site-draw ghost while dragging
+        // Site-draw ghost
         if(mode==='site'&&!IS_VIEWER&&!isDrawingSite){
             const sg=document.createElementNS('http://www.w3.org/2000/svg','g');
             sg.style.pointerEvents='none'; sg.style.opacity='0.4';
+            let px = currentMousePos.x, py = currentMousePos.y;
+            if (document.getElementById('chk-snap')?.checked) { px = Math.floor(px/GRID_SIZE)*GRID_SIZE; py = Math.floor(py/GRID_SIZE)*GRID_SIZE; }
             const sr=document.createElementNS('http://www.w3.org/2000/svg','rect');
-            sr.setAttribute('x',currentMousePos.x-40);sr.setAttribute('y',currentMousePos.y-20);
-            sr.setAttribute('width','80');sr.setAttribute('height','40');sr.setAttribute('rx','8');
+            sr.setAttribute('x',px);sr.setAttribute('y',py);
+            sr.setAttribute('width',GRID_SIZE);sr.setAttribute('height',GRID_SIZE);sr.setAttribute('rx','0'); // Square corners
             sr.setAttribute('fill','none');sr.setAttribute('stroke','var(--site-stroke)');
             sr.setAttribute('stroke-width','2');sr.setAttribute('stroke-dasharray','8,4');
-            sg.appendChild(sr);
-            layerUI.appendChild(sg);
+            sg.appendChild(sr); layerUI.appendChild(sg);
         }
 
         // Legend
@@ -1701,7 +1408,8 @@
         legend.setAttribute('transform',`translate(${vbX+20*zoomScale},${vbY+20*zoomScale}) scale(${zoomScale})`);
         const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
         bg.setAttribute('width','155');bg.setAttribute('height','155');
-        bg.setAttribute('fill','var(--box-bg)');bg.setAttribute('stroke','var(--stroke-color)');bg.setAttribute('rx','4');
+        bg.setAttribute('fill','var(--box-bg)');bg.setAttribute('stroke','var(--stroke-color)');
+        bg.setAttribute('rx','0'); // Square corners
         legend.appendChild(bg);
         const lt=document.createElementNS('http://www.w3.org/2000/svg','text');
         lt.setAttribute('x','15');lt.setAttribute('y','22');lt.setAttribute('font-family','sans-serif');
@@ -1717,64 +1425,43 @@
             la.setAttribute('x','50');la.setAttribute('y',49+i*22);la.setAttribute('font-family','sans-serif');
             la.setAttribute('font-size','12');la.setAttribute('fill','var(--text-main)');la.textContent=info.name;
             legend.appendChild(la);
-        });
-        layerUI.appendChild(legend);
+        }); layerUI.appendChild(legend);
 
-        if (refreshSidebar) updateSidebarUI();
-        if (!IS_VIEWER) autoSave();
+        if (refreshSidebar) updateSidebarUI(); if (!IS_VIEWER) autoSave();
     }
 
-    // ═══════════════════════════════════════════════════════
-    //  EXPORTS
-    // ═══════════════════════════════════════════════════════
     function exportPNG() {
         const tn=new Set(selectedNodes),te=new Set(selectedEdges),ts=new Set(selectedSites);
         selectedNodes.clear();selectedEdges.clear();selectedSites.clear(); render(false);
         let minX=0,minY=0,maxX=1000,maxY=1000;
         if(nodes.length>0||sites.length>0){
             minX=Infinity;minY=Infinity;maxX=-Infinity;maxY=-Infinity;
-            nodes.forEach(n=>{minX=Math.min(minX,n.x-100);minY=Math.min(minY,n.y-100);maxX=Math.max(maxX,n.x+100);maxY=Math.max(maxY,n.y+100);});
+            nodes.forEach(n=>{minX=Math.min(minX,n.x-100);minY=Math.min(minY,n.y-100);maxX=Math.max(maxX,n.x+200);maxY=Math.max(maxY,n.y+200);});
             sites.forEach(s=>{minX=Math.min(minX,s.x-50);minY=Math.min(minY,s.y-50);maxX=Math.max(maxX,s.x+s.w+50);maxY=Math.max(maxY,s.y+s.h+50);});
         }
         const w=maxX-minX,h=maxY-minY;
         const clone=svg.cloneNode(true);
-        clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
-        clone.setAttribute('viewBox',`${minX} ${minY} ${w} ${h}`);
-        clone.setAttribute('width',w);clone.setAttribute('height',h);
-        const grid=clone.querySelector('#layer-grid');if(grid)grid.remove();
-        const ui=clone.querySelector('#layer-ui');if(ui)ui.remove();
+        clone.setAttribute('xmlns','http://www.w3.org/2000/svg'); clone.setAttribute('viewBox',`${minX} ${minY} ${w} ${h}`); clone.setAttribute('width',w);clone.setAttribute('height',h);
+        const grid=clone.querySelector('#layer-grid');if(grid)grid.remove(); const ui=clone.querySelector('#layer-ui');if(ui)ui.remove();
         const isDark=document.body.classList.contains('dark-mode');
-        const style=document.createElement('style');
-        style.textContent=`:root{--bg-color:${isDark?'#121212':'#e8e9eb'};--box-bg:${isDark?'#2d3748':'#ffffff'};--text-main:${isDark?'#e2e8f0':'#1a202c'};--text-sub:${isDark?'#a0aec0':'#718096'};--stroke-color:${isDark?'#718096':'#4a5568'};--site-bg:${isDark?'rgba(255,255,255,0.03)':'rgba(0,0,0,0.03)'};--site-stroke:${isDark?'#4a5568':'#a0aec0'};--site-text:${isDark?'#e2e8f0':'#4a5568'};}`;
-        clone.prepend(style);
-        const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
-        bg.setAttribute('x',minX);bg.setAttribute('y',minY);bg.setAttribute('width',w);bg.setAttribute('height',h);
-        bg.setAttribute('fill',isDark?'#121212':'#fafafa');
-        clone.insertBefore(bg,clone.firstChild);
-        const svgData=new XMLSerializer().serializeToString(clone);
-        const img=new Image();
+        const style=document.createElement('style'); style.textContent=`:root{--bg-color:${isDark?'#121212':'#e8e9eb'};--box-bg:${isDark?'#2d3748':'#ffffff'};--text-main:${isDark?'#e2e8f0':'#1a202c'};--text-sub:${isDark?'#a0aec0':'#718096'};--stroke-color:${isDark?'#718096':'#4a5568'};--site-bg:${isDark?'rgba(255,255,255,0.03)':'rgba(0,0,0,0.03)'};--site-stroke:${isDark?'#4a5568':'#a0aec0'};--site-text:${isDark?'#e2e8f0':'#4a5568'};}`; clone.prepend(style);
+        const bg=document.createElementNS('http://www.w3.org/2000/svg','rect'); bg.setAttribute('x',minX);bg.setAttribute('y',minY);bg.setAttribute('width',w);bg.setAttribute('height',h); bg.setAttribute('fill',isDark?'#121212':'#fafafa'); clone.insertBefore(bg,clone.firstChild);
+        const svgData=new XMLSerializer().serializeToString(clone); const img=new Image();
         img.onload=()=>{
-            const canvas=document.createElement('canvas');
-            canvas.width=w*2;canvas.height=h*2;
+            const canvas=document.createElement('canvas'); canvas.width=w*2;canvas.height=h*2;
             const ctx=canvas.getContext('2d');ctx.scale(2,2);ctx.drawImage(img,0,0);
-            const a=document.createElement('a');
-            a.download=(getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram')+'.png';
-            a.href=canvas.toDataURL('image/png');a.click();
+            const a=document.createElement('a'); a.download=(getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram')+'.png'; a.href=canvas.toDataURL('image/png');a.click();
             selectedNodes=tn;selectedEdges=te;selectedSites=ts;render();
-        };
-        img.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(svgData)));
+        }; img.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(svgData)));
     }
 
     function exportPDF() {
         const tn=new Set(selectedNodes),te=new Set(selectedEdges),ts=new Set(selectedSites);
         selectedNodes.clear();selectedEdges.clear();selectedSites.clear();
-        const ox=vbX,oy=vbY,ow=vbW,oh=vbH,os=zoomScale;
-        fitToScreen();
-        const chk=document.getElementById('chk-grid'),was=chk.checked;
-        if(was){chk.checked=false;render(false);}
+        const ox=vbX,oy=vbY,ow=vbW,oh=vbH,os=zoomScale; fitToScreen();
+        const chk=document.getElementById('chk-grid'),was=chk.checked; if(was){chk.checked=false;render(false);}
         setTimeout(()=>{
-            window.print();
-            if(was)chk.checked=true;
+            window.print(); if(was)chk.checked=true;
             vbX=ox;vbY=oy;vbW=ow;vbH=oh;zoomScale=os;updateViewBox();
             selectedNodes=tn;selectedEdges=te;selectedSites=ts;render();
         },500);
@@ -1783,13 +1470,9 @@
     function exportViewer() {
         const data={title:getTitleValue(),nodes,edges,sites,isDark:document.body.classList.contains('dark-mode')};
         let html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-        html=html.replace('const IS_VIEWER = false;','const IS_VIEWER = true;');
-        html=html.replace('const INJECTED_DATA = null;',`const INJECTED_DATA = ${JSON.stringify(data)};`);
+        html=html.replace('const IS_VIEWER = false;','const IS_VIEWER = true;'); html=html.replace('const INJECTED_DATA = null;',`const INJECTED_DATA = ${JSON.stringify(data)};`);
         const blob=new Blob([html],{type:'text/html;charset=utf-8'});
-        const a=document.createElement('a');
-        a.href=URL.createObjectURL(blob);
-        a.download=(getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram')+'_viewer.html';
-        document.body.appendChild(a);a.click();document.body.removeChild(a);
+        const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=(getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram')+'_viewer.html'; document.body.appendChild(a);a.click();document.body.removeChild(a);
     }
     </script>
 </body>
