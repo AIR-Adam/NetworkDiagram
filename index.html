@@ -110,6 +110,7 @@
         button.cable-vpn.active    { background: #dc3545 !important; border-color: #c82333 !important; }
         button.cable-wireless.active { background: #17a2b8 !important; border-color: #117a8b !important; }
         button.tool-site.active    { background: #6c757d !important; border-color: #5a6268 !important; }
+        body.dark-mode #sel-routing { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
         body.dark-mode button:not(.active) { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
         body.dark-mode button:not(.active):hover { background: #4a5568; }
 
@@ -174,12 +175,12 @@
         #sidebar h3 { margin: 0 0 15px 0; font-size: 16px; color: var(--text-main); border-bottom: 2px solid var(--panel-border); padding-bottom: 8px; }
         .prop-group { margin-bottom: 15px; display: flex; flex-direction: column; gap: 5px; }
         .prop-group label { font-size: 12px; font-weight: bold; color: var(--text-sub); text-transform: uppercase; }
-        .prop-group input, .prop-group textarea {
+        .prop-group input, .prop-group textarea, .prop-group select {
             padding: 8px; border: 1px solid #ccc; border-radius: 0px; font-size: 14px;
             font-family: inherit; width: 100%; box-sizing: border-box; background: #fff; color: #333;
         }
-        body.dark-mode .prop-group input, body.dark-mode .prop-group textarea { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
-        .prop-group input:focus, .prop-group textarea:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 2px rgba(0,123,255,0.25); }
+        body.dark-mode .prop-group input, body.dark-mode .prop-group textarea, body.dark-mode .prop-group select { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
+        .prop-group input:focus, .prop-group textarea:focus, .prop-group select:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 2px rgba(0,123,255,0.25); }
         #no-props { color: var(--text-sub); font-size: 14px; text-align: center; margin-top: 40px; font-style: italic; }
         #save-status { font-size: 13px; font-weight: bold; color: #28a745; margin-left: 5px; opacity: 0; transition: opacity 0.5s; width: 150px; }
 
@@ -197,11 +198,11 @@
         #mobile-props-sheet h4 button { font-size: 18px; background: none; border: none; color: var(--text-sub); padding: 0; min-height: unset; }
         .mps-group { margin-bottom: 12px; }
         .mps-group label { font-size: 11px; font-weight: bold; color: var(--text-sub); text-transform: uppercase; display: block; margin-bottom: 4px; }
-        .mps-group input, .mps-group textarea {
+        .mps-group input, .mps-group textarea, .mps-group select {
             width: 100%; padding: 8px 10px; border: 1px solid var(--panel-border); border-radius: 0px;
             font-size: 14px; font-family: inherit; background: var(--bg-color); color: var(--text-main);
         }
-        .mps-group input:focus, .mps-group textarea:focus { outline: none; border-color: #007bff; }
+        .mps-group input:focus, .mps-group textarea:focus, .mps-group select:focus { outline: none; border-color: #007bff; }
         #mps-delete-btn { width: 100%; margin-top: 8px; background: #dc3545; color: white; border-color: #c82333; justify-content: center; padding: 12px; font-size: 15px; border-radius: 0px; }
 
         /* ── Floating Edit FAB ── */
@@ -263,6 +264,15 @@
                 <label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:5px;"><input type="checkbox" id="chk-snap" checked> Snap</label>
                 <label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:5px;"><input type="checkbox" id="chk-glow" checked onchange="render(false)"> Glow</label>
                 <label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer;margin-left:10px;padding-left:10px;border-left:1px solid var(--panel-border);"><input type="checkbox" id="chk-dark" checked onchange="toggleDarkMode()"> Dark Mode</label>
+            </div>
+            <div class="tool-group">
+                <label style="font-size:13px;display:flex;align-items:center;gap:5px;cursor:pointer;">🛣️ Routing
+                    <select id="sel-routing" onchange="setRouting(this.value)" style="padding:6px 8px;border:1px solid #ccc;border-radius:0;font-size:13px;font-family:inherit;cursor:pointer;">
+                        <option value="orthogonal">Orthogonal</option>
+                        <option value="direct">Direct</option>
+                        <option value="curved">Curved</option>
+                    </select>
+                </label>
             </div>
             <div class="tool-group">
                 <button onclick="handleZoom(0.9)">➕</button>
@@ -351,6 +361,12 @@
             <button onclick="document.getElementById('file-upload-m').click()" style="background:#17a2b8;color:white;border-color:#117a8b;">📂</button>
             <input type="file" id="file-upload-m" style="display:none;" accept=".json" onchange="loadJSON(event)">
             <button onclick="toggleDarkMode()" id="mb-btn-dark">🌙</button>
+            <div class="mb-sep"></div>
+            <select id="sel-routing-m" onchange="setRouting(this.value)" title="Connection routing" style="padding:8px;border:1px solid var(--panel-border);border-radius:0;font-size:13px;font-family:inherit;background:var(--panel-bg);color:var(--text-main);flex-shrink:0;">
+                <option value="orthogonal">🛣️ Orthogonal</option>
+                <option value="direct">🛣️ Direct</option>
+                <option value="curved">🛣️ Curved</option>
+            </select>
         </div>
     </div>
 
@@ -382,6 +398,7 @@
             <div id="no-props">Select a device, site, or connection.</div>
             <div id="props-panel" style="display:none;flex-direction:column;">
                 <div class="prop-group" id="group-1"><label id="lbl-1">Name</label><input type="text" id="prop-1" oninput="updateActiveProp(1,this.value)" onchange="pushHistory()" autocomplete="off"></div>
+                <div class="prop-group" id="group-icon" style="display:none;"><label>Icon</label><select id="prop-icon" onchange="updateNodeIcon(this.value)"></select></div>
                 <div class="prop-group" id="group-2"><label id="lbl-2">IP / Subnet</label><input type="text" id="prop-2" oninput="updateActiveProp(2,this.value)" onchange="pushHistory()" autocomplete="off"></div>
                 <div class="prop-group" id="group-3"><label id="lbl-3">Target Port</label><input type="text" id="prop-3" oninput="updateActiveProp(3,this.value)" onchange="pushHistory()" autocomplete="off"></div>
                 <div class="prop-group" id="group-4"><label id="lbl-4">Notes</label><textarea id="prop-4" rows="8" oninput="updateActiveProp(4,this.value)" onchange="pushHistory()"></textarea></div>
@@ -421,6 +438,7 @@
     <div id="mobile-props-sheet">
         <h4 id="mps-title">Properties <button onclick="closeMobileProps()">&times;</button></h4>
         <div class="mps-group" id="mps-group-1"><label id="mps-lbl-1">Name</label><input type="text" id="mps-prop-1" oninput="updateActiveProp(1,this.value)" onchange="pushHistory()" autocomplete="off"></div>
+        <div class="mps-group" id="mps-group-icon" style="display:none;"><label>Icon</label><select id="mps-prop-icon" onchange="updateNodeIcon(this.value)"></select></div>
         <div class="mps-group" id="mps-group-2"><label id="mps-lbl-2">IP / Subnet</label><input type="text" id="mps-prop-2" oninput="updateActiveProp(2,this.value)" onchange="pushHistory()" autocomplete="off"></div>
         <div class="mps-group" id="mps-group-3"><label id="mps-lbl-3">Target Port</label><input type="text" id="mps-prop-3" oninput="updateActiveProp(3,this.value)" onchange="pushHistory()" autocomplete="off"></div>
         <div class="mps-group" id="mps-group-4"><label id="mps-lbl-4">Notes</label><textarea id="mps-prop-4" rows="4" oninput="updateActiveProp(4,this.value)" onchange="pushHistory()"></textarea></div>
@@ -461,10 +479,12 @@
     let mode = 'select';
     let selectedDeviceType = 'Router';
     let selectedCableType = '1GbE';
+    let routingMode = 'orthogonal'; // 'direct' | 'orthogonal' | 'curved'
 
     let selectedNodes = new Set(), selectedEdges = new Set(), selectedSites = new Set();
     let isDragging = false, isPanning = false, isDrawingSite = false, hasMoved = false;
     let resizingSiteId = null, resizeAnchor = { x:0, y:0 };
+    let resizingNodeId = null;
     let lastMousePos = null, dragStartMousePos = null;
     let dragStartNodes = new Map(), dragStartSites = new Map();
     let startPos = null;
@@ -496,8 +516,154 @@
         'Wireless':{ color:'#17a2b8', name:'Wireless', dash:'4,4' },
         'VPN':     { color:'#dc3545', name:'Site-to-Site VPN', dash:'8,6' }
     };
+    // Common icons offered when customizing a Generic device.
+    const genericIconOptions = [
+        ['📦','Generic Box'], ['📷','Camera'], ['📹','Video Camera'], ['🎥','PTZ Camera'],
+        ['🖥️','Virtual Machine'], ['💻','Workstation'], ['🗄️','Database'], ['💾','Storage'],
+        ['📼','DVR / NVR'], ['🔋','UPS / Battery'], ['🔌','PDU / Power'], ['☎️','Modem'],
+        ['📺','Display / TV'], ['🔊','Speaker'], ['🎛️','Controller'], ['🌡️','Sensor'],
+        ['🚪','Door / Access'], ['⚖️','Load Balancer'], ['📟','IoT Device'], ['🛰️','Antenna'],
+        ['🖨️','Printer'], ['🤖','Automation'], ['🔔','Alarm'], ['🧭','Gateway']
+    ];
+
+    // ── Geometry helpers (shared by render + edge routing) ──
+    function getNodeDims(node) {
+        if (node && node.w && node.h) return { w: node.w, h: node.h };
+        const f = blockFormations[node.type] || { w:2, h:2 };
+        return { w: f.w * GRID_SIZE - BOX_MARGIN*2, h: f.h * GRID_SIZE - BOX_MARGIN*2 };
+    }
+    function getNodeCenter(node) { const d = getNodeDims(node); return { x: node.x + d.w/2, y: node.y + d.h/2 }; }
+    function getNodeIcon(node) { return node.icon || icons[node.type] || '📦'; }
+
+    // Point where a ray from a box center toward (tx,ty) crosses the box border.
+    function borderIntersect(cx, cy, dims, tx, ty) {
+        const dx = tx - cx, dy = ty - cy;
+        if (dx === 0 && dy === 0) return { x: cx, y: cy };
+        const hw = dims.w/2, hh = dims.h/2;
+        const sx = dx !== 0 ? hw / Math.abs(dx) : Infinity;
+        const sy = dy !== 0 ? hh / Math.abs(dy) : Infinity;
+        const s = Math.min(sx, sy);
+        return { x: cx + dx*s, y: cy + dy*s };
+    }
+    function polyLength(pts) { let L=0; for (let i=1;i<pts.length;i++) L += Math.hypot(pts[i].x-pts[i-1].x, pts[i].y-pts[i-1].y); return L; }
+    function pointAtFrac(pts, f) {
+        const total = polyLength(pts); if (total === 0) return { x: pts[0].x, y: pts[0].y };
+        let target = f*total, acc = 0;
+        for (let i=1;i<pts.length;i++) {
+            const seg = Math.hypot(pts[i].x-pts[i-1].x, pts[i].y-pts[i-1].y);
+            if (acc + seg >= target) { const r = (target-acc)/(seg||1); return { x: pts[i-1].x+(pts[i].x-pts[i-1].x)*r, y: pts[i-1].y+(pts[i].y-pts[i-1].y)*r }; }
+            acc += seg;
+        }
+        return { x: pts[pts.length-1].x, y: pts[pts.length-1].y };
+    }
+    function sampleBezier(p0, p1, p2, p3, n) {
+        const out = [];
+        for (let i=0;i<=n;i++) { const t=i/n, mt=1-t; out.push({ x: mt*mt*mt*p0.x+3*mt*mt*t*p1.x+3*mt*t*t*p2.x+t*t*t*p3.x, y: mt*mt*mt*p0.y+3*mt*mt*t*p1.y+3*mt*t*t*p2.y+t*t*t*p3.y }); }
+        return out;
+    }
+
+    function sideNormal(side) { return side==='L'?{x:-1,y:0}:side==='R'?{x:1,y:0}:side==='T'?{x:0,y:-1}:{x:0,y:1}; }
+
+    // Port distribution: spread every node's connections across distinct points on its
+    // borders so edges to different neighbours leave/arrive at separate, traceable spots.
+    // Returns { edgeId: { a:{x,y,side}, b:{x,y,side} } }.
+    function computeEdgeAnchors() {
+        const groups = {};   // "nodeId|side" -> [{ edgeId, end, cross }]
+        const info = {};     // edgeId -> { sc, tc, sd, td, sSide, tSide }
+        edges.forEach(edge => {
+            const src = nodes.find(n=>n.id===edge.source), tgt = nodes.find(n=>n.id===edge.target);
+            if (!src || !tgt) return;
+            const sc = getNodeCenter(src), tc = getNodeCenter(tgt);
+            const sd = getNodeDims(src), td = getNodeDims(tgt);
+            const dx = tc.x - sc.x, dy = tc.y - sc.y;
+            let sSide, tSide;
+            if (Math.abs(dx) >= Math.abs(dy)) { sSide = dx>=0?'R':'L'; tSide = dx>=0?'L':'R'; }
+            else { sSide = dy>=0?'B':'T'; tSide = dy>=0?'T':'B'; }
+            info[edge.id] = { sc, tc, sd, td, sSide, tSide };
+            const sCross = (sSide==='L'||sSide==='R') ? tc.y : tc.x;   // sort key along the side
+            const tCross = (tSide==='L'||tSide==='R') ? sc.y : sc.x;
+            (groups[edge.source+'|'+sSide] = groups[edge.source+'|'+sSide] || []).push({ edgeId: edge.id, end:'s', cross: sCross });
+            (groups[edge.target+'|'+tSide] = groups[edge.target+'|'+tSide] || []).push({ edgeId: edge.id, end:'t', cross: tCross });
+        });
+        const anchors = {};
+        Object.values(groups).forEach(arr => {
+            arr.sort((p,q)=> p.cross - q.cross || (p.edgeId<q.edgeId?-1:1));
+            const n = arr.length;
+            arr.forEach((item, i) => {
+                const ei = info[item.edgeId], isS = item.end==='s';
+                const c = isS?ei.sc:ei.tc, d = isS?ei.sd:ei.td, side = isS?ei.sSide:ei.tSide;
+                const horiz = (side==='L'||side==='R');
+                const sideLen = horiz ? d.h : d.w;
+                const spacing = Math.min(20, sideLen/(n+1));
+                let off = (i-(n-1)/2)*spacing;
+                const lim = sideLen/2 - 3; if (off>lim) off=lim; if (off<-lim) off=-lim;
+                let ax, ay;
+                if (side==='R')      { ax=c.x+d.w/2; ay=c.y+off; }
+                else if (side==='L') { ax=c.x-d.w/2; ay=c.y+off; }
+                else if (side==='B') { ax=c.x+off;   ay=c.y+d.h/2; }
+                else                 { ax=c.x+off;   ay=c.y-d.h/2; }
+                (anchors[item.edgeId] = anchors[item.edgeId] || {})[isS?'a':'b'] = { x:ax, y:ay, side };
+            });
+        });
+        return anchors;
+    }
+
+    // Build polyline points + SVG path for one edge, using its distributed anchors.
+    function buildEdgeGeometry(edge, anchors) {
+        const an = anchors[edge.id];
+        const src = nodes.find(n=>n.id===edge.source), tgt = nodes.find(n=>n.id===edge.target);
+        const a = (an && an.a) || { ...getNodeCenter(src), side:'R' };
+        const b = (an && an.b) || { ...getNodeCenter(tgt), side:'L' };
+
+        if (routingMode === 'direct') {
+            return { pts:[a,b], d:`M ${a.x} ${a.y} L ${b.x} ${b.y}` };
+        }
+        if (routingMode === 'curved') {
+            const dist = Math.hypot(b.x-a.x, b.y-a.y), k = Math.max(28, dist*0.4);
+            const na = sideNormal(a.side), nb = sideNormal(b.side);
+            const c1 = { x:a.x+na.x*k, y:a.y+na.y*k };
+            const c2 = { x:b.x+nb.x*k, y:b.y+nb.y*k };
+            return { pts: sampleBezier(a, c1, c2, b, 16), d:`M ${a.x} ${a.y} C ${c1.x} ${c1.y} ${c2.x} ${c2.y} ${b.x} ${b.y}` };
+        }
+        // orthogonal — exit perpendicular to each side, meet at a shared lane
+        const sVert = (a.side==='T'||a.side==='B'), tVert = (b.side==='T'||b.side==='B');
+        let pts;
+        if (sVert && tVert)        { const mid=(a.y+b.y)/2; pts=[a,{x:a.x,y:mid},{x:b.x,y:mid},b]; }
+        else if (!sVert && !tVert) { const mid=(a.x+b.x)/2; pts=[a,{x:mid,y:a.y},{x:mid,y:b.y},b]; }
+        else if (sVert && !tVert)  { pts=[a,{x:a.x,y:b.y},b]; }
+        else                       { pts=[a,{x:b.x,y:a.y},b]; }
+        return { pts, d:'M ' + pts.map(p=>`${p.x} ${p.y}`).join(' L ') };
+    }
+
+    function setRouting(val) {
+        if (IS_VIEWER) return;
+        routingMode = val;
+        syncRoutingUI();
+        pushHistory(); render();
+    }
+    function syncRoutingUI() {
+        const s1 = document.getElementById('sel-routing'); if (s1) s1.value = routingMode;
+        const s2 = document.getElementById('sel-routing-m'); if (s2) s2.value = routingMode;
+    }
+    function populateIconDropdowns() {
+        const opts = genericIconOptions.map(([ic,label]) => `<option value="${ic}">${ic} ${label}</option>`).join('');
+        ['prop-icon','mps-prop-icon'].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = opts; });
+    }
+    function updateNodeIcon(value) {
+        if (IS_VIEWER) return;
+        if (selectedNodes.size===1 && selectedSites.size===0 && selectedEdges.size===0) {
+            const node = nodes.find(n=>n.id===Array.from(selectedNodes)[0]);
+            if (node) {
+                node.icon = value;
+                const d = document.getElementById('prop-icon'); if (d) d.value = value;
+                const m = document.getElementById('mps-prop-icon'); if (m) m.value = value;
+                render(false); pushHistory();
+            }
+        }
+    }
 
     window.onload = () => {
+        populateIconDropdowns();
         if (IS_VIEWER) {
             document.getElementById('toolbar-edit-1').style.display = 'none';
             document.getElementById('toolbar-edit-2').style.display = 'none';
@@ -507,6 +673,7 @@
             document.getElementById('toolbar-viewer').style.display = 'flex';
             if (INJECTED_DATA) {
                 nodes = INJECTED_DATA.nodes||[]; edges = INJECTED_DATA.edges||[]; sites = INJECTED_DATA.sites||[];
+                if (INJECTED_DATA.routing) routingMode = INJECTED_DATA.routing;
                 document.getElementById('viewer-title').innerText = INJECTED_DATA.title||'Network Diagram';
                 if (INJECTED_DATA.isDark) { document.body.classList.add('dark-mode'); document.getElementById('chk-dark-viewer').checked = true; }
             }
@@ -584,7 +751,7 @@
     function fitToScreen() {
         if (nodes.length === 0 && sites.length === 0) { resetZoom(); return; }
         let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity;
-        nodes.forEach(n => { minX=Math.min(minX,n.x-50); minY=Math.min(minY,n.y-50); maxX=Math.max(maxX,n.x+150); maxY=Math.max(maxY,n.y+150); });
+        nodes.forEach(n => { const d=getNodeDims(n); minX=Math.min(minX,n.x-50); minY=Math.min(minY,n.y-50); maxX=Math.max(maxX,n.x+d.w+50); maxY=Math.max(maxY,n.y+d.h+50); });
         sites.forEach(s => { minX=Math.min(minX,s.x-50); minY=Math.min(minY,s.y-50); maxX=Math.max(maxX,s.x+s.w+50); maxY=Math.max(maxY,s.y+s.h+50); });
         const cW=maxX-minX, cH=maxY-minY;
         const rect=svg.getBoundingClientRect();
@@ -599,7 +766,7 @@
         if (IS_VIEWER) return;
         mode = newMode; connectingFromId = null; isDragging = false; isPanning = false; isDrawingSite = false;
         infoTooltip.style.display = 'none';
-        if (resizingSiteId) { resizingSiteId = null; pushHistory(); }
+        if (resizingSiteId || resizingNodeId) { resizingSiteId = null; resizingNodeId = null; pushHistory(); }
         updateToolbarUI(); render(false);
     }
     function setDevice(type) { selectedDeviceType = type; setMode('place'); }
@@ -646,7 +813,7 @@
     function pushHistory() {
         if (IS_VIEWER) return;
         if (historyIndex < history.length-1) history = history.slice(0, historyIndex+1);
-        history.push(JSON.stringify({ title: getTitleValue(), nodes, edges, sites }));
+        history.push(JSON.stringify({ title: getTitleValue(), nodes, edges, sites, routing: routingMode }));
         if (history.length > 50) history.shift(); else historyIndex++;
         autoSave();
     }
@@ -656,6 +823,7 @@
     function restoreState(stateJSON) {
         const d = JSON.parse(stateJSON);
         nodes=d.nodes||[]; edges=d.edges||[]; sites=d.sites||[];
+        if (d.routing) routingMode = d.routing; syncRoutingUI();
         setTitleValue(d.title||'Untitled Network');
         selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
         render(true); autoSave();
@@ -670,7 +838,7 @@
     }
     function autoSave() {
         if (IS_VIEWER) return;
-        localStorage.setItem('network-diagram-autosave', JSON.stringify({ title:getTitleValue(), nodes, edges, sites }));
+        localStorage.setItem('network-diagram-autosave', JSON.stringify({ title:getTitleValue(), nodes, edges, sites, routing: routingMode }));
         triggerToast('✓ Auto-saved');
     }
     function autoLoad() {
@@ -679,13 +847,14 @@
             try {
                 const d = JSON.parse(saved);
                 nodes=d.nodes||[]; edges=d.edges||[]; sites=d.sites||[];
+                if (d.routing) routingMode = d.routing;
                 setTitleValue(d.title||'Untitled Network');
             } catch(e) {}
         }
-        pushHistory(); updateViewBox(); render(true);
+        syncRoutingUI(); pushHistory(); updateViewBox(); render(true);
     }
     function saveJSON() {
-        const blob = new Blob([JSON.stringify({ title:getTitleValue(), nodes, edges, sites },null,2)], { type:'application/json' });
+        const blob = new Blob([JSON.stringify({ title:getTitleValue(), nodes, edges, sites, routing: routingMode },null,2)], { type:'application/json' });
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
         a.download = (getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram') + '.json';
         document.body.appendChild(a); a.click(); document.body.removeChild(a); triggerToast('✓ JSON Saved');
@@ -697,6 +866,7 @@
         reader.onload = e => {
             try {
                 const d = JSON.parse(e.target.result); nodes=d.nodes||[]; sites=d.sites||[]; edges=d.edges||[];
+                if (d.routing) routingMode = d.routing; syncRoutingUI();
                 setTitleValue(d.title||'Untitled Network');
                 selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear();
                 pushHistory(); render(true);
@@ -714,7 +884,7 @@
     function touchToMouse(touch, type) { return { clientX: touch.clientX, clientY: touch.clientY, button: 0, shiftKey: false, ctrlKey: false, metaKey: false, _type: type, stopPropagation() {}, preventDefault() {} }; }
 
     function pointerDown(synth, isBgClick) {
-        if (resizingSiteId) { resizingSiteId = null; pushHistory(); render(); return; }
+        if (resizingSiteId || resizingNodeId) { resizingSiteId = null; resizingNodeId = null; pushHistory(); render(); return; }
         if (isBgClick && IS_VIEWER) {
             if (selectedNodes.size||selectedEdges.size||selectedSites.size) { selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); closeViewerPopup(); render(false); }
             isPanning = true; svg.style.cursor = CURSOR_GRABBING; lastMousePos = { x: synth.clientX, y: synth.clientY }; return;
@@ -756,6 +926,22 @@
                 site.w = Math.max(GRID_SIZE, sp.x - site.x); site.h = Math.max(GRID_SIZE, sp.y - site.y); render(false);
             } return;
         }
+        if (resizingNodeId) {
+            const node = nodes.find(n => n.id === resizingNodeId);
+            if (node) {
+                const snap = document.getElementById('chk-snap')?.checked;
+                let nw = currentMousePos.x - node.x, nh = currentMousePos.y - node.y;
+                if (snap) {
+                    // Snap to whole grid cells using the SAME inset scale as default blocks
+                    // (cells*GRID_SIZE - BOX_MARGIN*2), so the box stays inside the grid lines.
+                    const cellsW = Math.max(1, Math.round((nw + BOX_MARGIN*2) / GRID_SIZE));
+                    const cellsH = Math.max(1, Math.round((nh + BOX_MARGIN*2) / GRID_SIZE));
+                    nw = cellsW*GRID_SIZE - BOX_MARGIN*2;
+                    nh = cellsH*GRID_SIZE - BOX_MARGIN*2;
+                }
+                node.w = Math.max(GRID_SIZE - BOX_MARGIN*2, nw); node.h = Math.max(GRID_SIZE - BOX_MARGIN*2, nh); render(false);
+            } return;
+        }
         if (isDrawingSite && mode === 'site') {
             const sp = snapPoint(currentMousePos, true); const as = sites[sites.length-1];
             as.x=Math.min(startPos.x, sp.x); as.y=Math.min(startPos.y, sp.y);
@@ -787,6 +973,7 @@
         if (isPanning) { isPanning = false; svg.style.cursor = IS_VIEWER ? 'default' : (mode==='select'?'default':CURSOR_CROSSHAIR); }
         if (IS_VIEWER) return;
         if (resizingSiteId) { resizingSiteId=null; pushHistory(); }
+        if (resizingNodeId) { resizingNodeId=null; pushHistory(); }
         if (isDrawingSite)  { isDrawingSite=false; setMode('select'); pushHistory(); }
         if (isDragging && hasMoved) pushHistory();
         isDragging=false; hasMoved=false; lastMousePos=null; dragStartMousePos=null;
@@ -848,7 +1035,7 @@
             if (e.key.toLowerCase()==='z') { e.preventDefault(); undo(); return; }
             if (e.key.toLowerCase()==='y') { e.preventDefault(); redo(); return; }
         }
-        if (e.key==='Escape') { if(resizingSiteId){resizingSiteId=null;pushHistory();render();} setMode('select'); }
+        if (e.key==='Escape') { if(resizingSiteId||resizingNodeId){resizingSiteId=null;resizingNodeId=null;pushHistory();render();} setMode('select'); }
         if (e.key.toLowerCase()==='s') setMode('select'); if (e.key.toLowerCase()==='c') setMode('connect');
         if (e.key==='Delete'||e.key==='Backspace') deleteSelected();
     });
@@ -883,7 +1070,7 @@
             if(type==='node') selectedNodes.add(id); else if(type==='site') selectedSites.add(id);
             render(false); showViewerPopup(id, type, e.clientX, e.clientY); return;
         }
-        if (resizingSiteId) { resizingSiteId=null; pushHistory(); render(); return; }
+        if (resizingSiteId || resizingNodeId) { resizingSiteId=null; resizingNodeId=null; pushHistory(); render(); return; }
 
         if (mode==='select') {
             const isMulti = e.shiftKey||e.ctrlKey||e.metaKey; const col = type==='node' ? selectedNodes : selectedSites;
@@ -954,9 +1141,11 @@
         const sheet = document.getElementById('mobile-props-sheet');
         const hasSelection = selectedNodes.size===1||selectedEdges.size===1||selectedSites.size===1; if (!hasSelection) return;
 
+        const mIcon = document.getElementById('mps-group-icon'); if (mIcon) mIcon.style.display='none';
         if (selectedNodes.size===1) {
             const node = nodes.find(n=>n.id===Array.from(selectedNodes)[0]); if (!node) return;
             document.getElementById('mps-title').firstChild.textContent = '⚙️ Device: '; document.getElementById('mps-lbl-1').textContent = 'Device Name'; document.getElementById('mps-prop-1').value = node.name||''; document.getElementById('mps-lbl-2').textContent = 'IP / Subnet'; document.getElementById('mps-prop-2').value = node.ip||''; document.getElementById('mps-group-3').style.display='none'; document.getElementById('mps-lbl-4').textContent = 'Notes'; document.getElementById('mps-prop-4').value = node.notes||''; document.getElementById('mps-group-2').style.display='block';
+            if (node.type==='Generic'&&mIcon){ mIcon.style.display='block'; document.getElementById('mps-prop-icon').value=getNodeIcon(node); }
         } else if (selectedSites.size===1) {
             const site = sites.find(s=>s.id===Array.from(selectedSites)[0]); if (!site) return;
             document.getElementById('mps-title').firstChild.textContent = '🔲 Site: '; document.getElementById('mps-lbl-1').textContent = 'Site Name'; document.getElementById('mps-prop-1').value = site.name||''; document.getElementById('mps-group-2').style.display='none'; document.getElementById('mps-group-3').style.display='none'; document.getElementById('mps-lbl-4').textContent = 'Notes'; document.getElementById('mps-prop-4').value = site.notes||'';
@@ -987,9 +1176,11 @@
         const p1=document.getElementById('prop-1'),p2=document.getElementById('prop-2'),p3=document.getElementById('prop-3'),p4=document.getElementById('prop-4');
         let visible=false;
 
+        const gIcon=document.getElementById('group-icon'); if(gIcon) gIcon.style.display='none';
         if (selectedNodes.size===1&&selectedSites.size===0&&selectedEdges.size===0) {
             const node=nodes.find(n=>n.id===Array.from(selectedNodes)[0]);
-            if(node){l1.innerText='Device Name';p1.value=node.name||'';l2.innerText='IP / Subnet';p2.value=node.ip||'';l4.innerText='Notes';p4.value=node.notes||'';g1.style.display='flex';g2.style.display='flex';g3.style.display='none';g4.style.display='flex';propsPanel.style.display='flex';noProps.style.display='none';visible=true;}
+            if(node){l1.innerText='Device Name';p1.value=node.name||'';l2.innerText='IP / Subnet';p2.value=node.ip||'';l4.innerText='Notes';p4.value=node.notes||'';g1.style.display='flex';g2.style.display='flex';g3.style.display='none';g4.style.display='flex';propsPanel.style.display='flex';noProps.style.display='none';visible=true;
+                if(node.type==='Generic'&&gIcon){ gIcon.style.display='flex'; document.getElementById('prop-icon').value=getNodeIcon(node); }}
         } else if (selectedSites.size===1&&selectedNodes.size===0&&selectedEdges.size===0) {
             const site=sites.find(s=>s.id===Array.from(selectedSites)[0]);
             if(site){l1.innerText='Site Name';p1.value=site.name||'';l4.innerText='Notes';p4.value=site.notes||'';g1.style.display='flex';g2.style.display='none';g3.style.display='none';g4.style.display='flex';propsPanel.style.display='flex';noProps.style.display='none';visible=true;}
@@ -1120,26 +1311,15 @@
                      r2.y + r2.h + pad <= r1.y);
         };
 
-        const edgeGroups={};
-        edges.forEach(edge=>{ const key=[edge.source,edge.target].sort().join('|'); if(!edgeGroups[key]) edgeGroups[key]=[]; edgeGroups[key].push(edge); });
-        Object.values(edgeGroups).forEach(group=>{
-            const count=group.length;
-            group.forEach((edge,index)=>{
+        const edgeAnchors = computeEdgeAnchors();
+        edges.forEach(edge=>{
+            {
                 const src=nodes.find(n=>n.id===edge.source), tgt=nodes.find(n=>n.id===edge.target);
                 if(!src||!tgt) return;
 
-                const srcForm = blockFormations[src.type] || {w:2, h:2};
-                const tgtForm = blockFormations[tgt.type] || {w:2, h:2};
-                const srcCx = src.x + (srcForm.w * GRID_SIZE - BOX_MARGIN*2) / 2;
-                const srcCy = src.y + (srcForm.h * GRID_SIZE - BOX_MARGIN*2) / 2;
-                const tgtCx = tgt.x + (tgtForm.w * GRID_SIZE - BOX_MARGIN*2) / 2;
-                const tgtCy = tgt.y + (tgtForm.h * GRID_SIZE - BOX_MARGIN*2) / 2;
+                const geo = buildEdgeGeometry(edge, edgeAnchors);
+                const pts = geo.pts;
 
-                const dx=tgtCx-srcCx,dy=tgtCy-srcCy,len=Math.hypot(dx,dy);
-                let nx=0,ny=0; if(len>0){nx=-dy/len;ny=dx/len;}
-                const off=(index-(count-1)/2)*20;
-                const x1=srcCx+nx*off, y1=srcCy+ny*off, x2=tgtCx+nx*off, y2=tgtCy+ny*off;
-                
                 const isSel=selectedEdges.has(edge.id),isRel=relatedEdges.has(edge.id);
                 const cp=cableTypes[edge.type]||cableTypes['1GbE'];
                 let strokeColor=cp.color,strokeWidth='3';
@@ -1154,7 +1334,7 @@
                 lineG.addEventListener('touchend', e=>{ e.preventDefault(); e.stopPropagation(); cancelLongPress(); Array.from(e.changedTouches).forEach(t=>activeTouches.delete(t.identifier)); if(activeTouches.size===0) pointerUp(); },{passive:false});
 
                 lineG.addEventListener('mouseenter', e=>{
-                    if(isDragging||isPanning||resizingSiteId) return; if(!IS_VIEWER&&mode!=='select') return;
+                    if(isDragging||isPanning||resizingSiteId||resizingNodeId) return; if(!IS_VIEWER&&mode!=='select') return;
                     const safeNotes=edge.notes?edge.notes.replace(/</g,'&lt;').replace(/>/g,'&gt;'):'None';
                     infoTooltip.innerHTML=`<strong style="font-size:15px;color:${cp.color};">${cp.name}</strong><br/><br/><span style="color:#9ab;">Label:</span> ${edge.label||'None'}<br/><span style="color:#9ab;">Src:</span> ${edge.sourceLabel||'None'}<br/><span style="color:#9ab;">Tgt:</span> ${edge.targetLabel||'None'}<br/><br/>${safeNotes}`;
                     infoTooltip.style.display='block'; const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
@@ -1162,66 +1342,33 @@
                 lineG.addEventListener('mousemove', e=>{ if(isDragging||isPanning||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;} const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
                 lineG.addEventListener('mouseleave',()=>infoTooltip.style.display='none');
 
-                const line=document.createElementNS('http://www.w3.org/2000/svg','line');
-                line.setAttribute('x1',x1);line.setAttribute('y1',y1);line.setAttribute('x2',x2);line.setAttribute('y2',y2);
-                line.setAttribute('stroke',strokeColor);line.setAttribute('stroke-width',strokeWidth);
-                if(isRel&&!isSel) line.style.filter='drop-shadow(0px 0px 4px rgba(23,162,184,0.8))';
-                if(cp.dash&&!isSel) line.setAttribute('stroke-dasharray',cp.dash);
-                lineG.appendChild(line);
+                const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+                path.setAttribute('d',geo.d); path.setAttribute('fill','none');
+                path.setAttribute('stroke',strokeColor); path.setAttribute('stroke-width',strokeWidth);
+                path.setAttribute('stroke-linejoin','round'); path.setAttribute('stroke-linecap','round');
+                if(isRel&&!isSel) path.style.filter='drop-shadow(0px 0px 4px rgba(23,162,184,0.8))';
+                if(cp.dash&&!isSel) path.setAttribute('stroke-dasharray',cp.dash);
+                lineG.appendChild(path);
 
-                const ca=document.createElementNS('http://www.w3.org/2000/svg','line');
-                ca.setAttribute('x1',x1);ca.setAttribute('y1',y1);ca.setAttribute('x2',x2);ca.setAttribute('y2',y2);
-                ca.setAttribute('stroke','transparent');ca.setAttribute('stroke-width','25');
+                const ca=document.createElementNS('http://www.w3.org/2000/svg','path');
+                ca.setAttribute('d',geo.d); ca.setAttribute('fill','none');
+                ca.setAttribute('stroke','transparent'); ca.setAttribute('stroke-width','25');
                 lineG.appendChild(ca); layerEdges.appendChild(lineG);
 
-                // Precise Offset Math using standard Rectangles
-                const getEdgeOffset = (nodeForm) => {
-                    const bw = nodeForm.w * GRID_SIZE - BOX_MARGIN*2;
-                    const bh = nodeForm.h * GRID_SIZE - BOX_MARGIN*2;
-                    const angle = Math.atan2(y2 - y1, x2 - x1);
-                    const absCos = Math.abs(Math.cos(angle));
-                    const absSin = Math.abs(Math.sin(angle));
-                    
-                    const distX = absCos > 0.001 ? (bw / 2) / absCos : Infinity;
-                    const distY = absSin > 0.001 ? (bh / 2) / absSin : Infinity;
-                    
-                    return Math.min(distX, distY) + 8; // Tighter padding for blocks
-                };
-
-                const offsetSrc = getEdgeOffset(srcForm);
-                const offsetTgt = getEdgeOffset(tgtForm);
-
-                const t1 = len > 0 ? Math.min(offsetSrc / len, 0.45) : 0.5;
-                const t2 = len > 0 ? Math.max(1 - (offsetTgt / len), 0.55) : 0.5;
-
-                const drawPortLabel=(textStr,tp,isCenter=false, isSource=false)=>{
+                const drawPortLabel=(textStr,frac,isCenter=false)=>{
                     if(!textStr) return;
-                    let mx, my, tw2, rect;
-                    let currentTp = tp;
-                    let maxAttempts = 20;
-                    
-                    // Push overlapping tags ~18px down the line iteratively
-                    const tpStep = 18 / (len > 0 ? len : 1);
-                    const dir = isCenter ? 0 : (isSource ? 1 : -1);
-
-                    for(let i=0; i<maxAttempts; i++) {
-                        mx=x1+(x2-x1)*currentTp;
-                        my=y1+(y2-y1)*currentTp;
+                    let mx, my, tw2, rect, f=frac;
+                    const step=0.045, dir=isCenter?0:(frac<0.5?1:-1);
+                    for(let i=0;i<16;i++){
+                        const p=pointAtFrac(pts,f); mx=p.x; my=p.y;
                         tw2=textStr.length*(isCenter?6.5:5.5)+8;
-                        rect = { x: mx-(tw2/2), y: my-8, w: tw2, h: 16 };
-                        
-                        let overlap = false;
-                        for(let dl of drawnLabels) {
-                            if(isOverlapping(rect, dl)) { overlap = true; break; }
-                        }
-                        
-                        if(!overlap || dir === 0) break;
-                        currentTp += dir * tpStep;
-                        
-                        if(isSource && currentTp > 0.48) break;
-                        if(!isSource && !isCenter && currentTp < 0.52) break;
+                        rect={ x: mx-(tw2/2), y: my-8, w: tw2, h: 16 };
+                        let overlap=false;
+                        for(const dl of drawnLabels){ if(isOverlapping(rect,dl)){ overlap=true; break; } }
+                        if(!overlap||dir===0) break;
+                        f += dir*step;
+                        if(f<0.06){f=0.06;break;} if(f>0.94){f=0.94;break;}
                     }
-                    
                     if(rect) drawnLabels.push(rect);
 
                     const lg=document.createElementNS('http://www.w3.org/2000/svg','g');
@@ -1238,21 +1385,21 @@
                     t.setAttribute('font-weight',isCenter?'bold':'normal');t.setAttribute('fill','var(--text-main)');
                     t.textContent=textStr; lg.appendChild(t); layerLabels.appendChild(lg);
                 };
-                
-                drawPortLabel(edge.sourceLabel,t1,false,true); 
-                drawPortLabel(edge.targetLabel,t2,false,false); 
-                drawPortLabel(edge.label,0.5,true,false);
-            });
+
+                drawPortLabel(edge.sourceLabel,0.2,false);
+                drawPortLabel(edge.targetLabel,0.8,false);
+                drawPortLabel(edge.label,0.5,true);
+            }
         });
 
         // ── Nodes (Blocks) ──
         nodes.forEach(node=>{
             const isSel=selectedNodes.has(node.id),isRel=relatedNodes.has(node.id);
-            const form = blockFormations[node.type] || {w:2, h:2};
-            
-            // Outer dimensions using fixed structural blocks
-            const bw = form.w * GRID_SIZE - (BOX_MARGIN * 2);
-            const bh = form.h * GRID_SIZE - (BOX_MARGIN * 2);
+            const isResN=node.id===resizingNodeId;
+
+            // Outer dimensions: custom size if set, else fixed structural block
+            const dims = getNodeDims(node);
+            const bw = dims.w, bh = dims.h;
 
             const g=document.createElementNS('http://www.w3.org/2000/svg','g');
             // node.x/y represents the strict top-left coordinate drawn directly into the cell space
@@ -1278,7 +1425,7 @@
 
             const safeName=node.name||'',safeIp=node.ip||'';
             let strokeCol='var(--stroke-color)',strokeW='2';
-            if(isSel){strokeCol='#007bff';strokeW='4';} else if(isRel){strokeCol='#17a2b8';strokeW='3';}
+            if(isSel||isResN){strokeCol='#007bff';strokeW='4';} else if(isRel){strokeCol='#17a2b8';strokeW='3';}
 
             const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
             rect.setAttribute('x', '0'); rect.setAttribute('y', '0');
@@ -1292,8 +1439,8 @@
 
             const icon=document.createElementNS('http://www.w3.org/2000/svg','text');
             icon.setAttribute('x', bw/2); icon.setAttribute('y', bh/2 - (safeIp?6:-2));
-            icon.setAttribute('text-anchor','middle'); icon.setAttribute('font-size','22'); 
-            icon.textContent=icons[node.type]||'📦'; g.appendChild(icon);
+            icon.setAttribute('text-anchor','middle'); icon.setAttribute('font-size','22');
+            icon.textContent=getNodeIcon(node); g.appendChild(icon);
 
             const nameT=document.createElementNS('http://www.w3.org/2000/svg','text');
             nameT.setAttribute('x', bw/2); nameT.setAttribute('y', bh/2 + (safeIp?10:18));
@@ -1310,6 +1457,16 @@
                 ipT.setAttribute('fill','var(--text-sub)');
                 ipT.textContent=safeIp; g.appendChild(ipT);
             }
+
+            // Resize handle (bottom-right) for the selected node
+            if (isSel && mode==='select' && !IS_VIEWER && selectedNodes.size===1 && selectedSites.size===0 && selectedEdges.size===0) {
+                const handle=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+                handle.setAttribute('points',`${bw-14},${bh} ${bw},${bh} ${bw},${bh-14}`);
+                handle.setAttribute('fill','#007bff'); handle.style.cursor='se-resize'; handle.style.pointerEvents='all';
+                handle.addEventListener('mousedown', e=>{ e.stopPropagation(); if(e.button===2)return; resizingNodeId=node.id; });
+                handle.addEventListener('touchstart', e=>{ e.preventDefault(); e.stopPropagation(); Array.from(e.changedTouches).forEach(t=>activeTouches.set(t.identifier,{clientX:t.clientX,clientY:t.clientY})); resizingNodeId=node.id; },{passive:false});
+                g.appendChild(handle);
+            }
             layerNodes.appendChild(g);
         });
 
@@ -1325,9 +1482,8 @@
         if(connectingFromId&&mode==='connect'){
             const src=nodes.find(n=>n.id===connectingFromId);
             if(src){
-                const srcForm = blockFormations[src.type] || {w:2, h:2};
-                const cx = src.x + (srcForm.w*GRID_SIZE-BOX_MARGIN*2)/2;
-                const cy = src.y + (srcForm.h*GRID_SIZE-BOX_MARGIN*2)/2;
+                const sCenter = getNodeCenter(src);
+                const cx = sCenter.x, cy = sCenter.y;
 
                 previewLine.setAttribute('x1', cx); previewLine.setAttribute('y1', cy);
                 previewLine.setAttribute('x2',currentMousePos.x); previewLine.setAttribute('y2',currentMousePos.y);
@@ -1468,7 +1624,7 @@
     }
 
     function exportViewer() {
-        const data={title:getTitleValue(),nodes,edges,sites,isDark:document.body.classList.contains('dark-mode')};
+        const data={title:getTitleValue(),nodes,edges,sites,routing:routingMode,isDark:document.body.classList.contains('dark-mode')};
         let html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
         html=html.replace('const IS_VIEWER = false;','const IS_VIEWER = true;'); html=html.replace('const INJECTED_DATA = null;',`const INJECTED_DATA = ${JSON.stringify(data)};`);
         const blob=new Blob([html],{type:'text/html;charset=utf-8'});
