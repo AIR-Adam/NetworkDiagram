@@ -400,6 +400,7 @@
                 <div class="prop-group" id="group-1"><label id="lbl-1">Name</label><input type="text" id="prop-1" oninput="updateActiveProp(1,this.value)" onchange="pushHistory()" autocomplete="off"></div>
                 <div class="prop-group" id="group-icon" style="display:none;"><label>Icon</label><select id="prop-icon" onchange="updateNodeIcon(this.value)"></select></div>
                 <div class="prop-group" id="group-2"><label id="lbl-2">IP / Subnet</label><input type="text" id="prop-2" oninput="updateActiveProp(2,this.value)" onchange="pushHistory()" autocomplete="off"></div>
+                <div class="prop-group" id="group-5"><label id="lbl-5">MAC Address</label><input type="text" id="prop-5" oninput="updateActiveProp(5,this.value)" onchange="pushHistory()" autocomplete="off" placeholder="AA:BB:CC:DD:EE:FF"></div>
                 <div class="prop-group" id="group-3"><label id="lbl-3">Target Port</label><input type="text" id="prop-3" oninput="updateActiveProp(3,this.value)" onchange="pushHistory()" autocomplete="off"></div>
                 <div class="prop-group" id="group-4"><label id="lbl-4">Notes</label><textarea id="prop-4" rows="8" oninput="updateActiveProp(4,this.value)" onchange="pushHistory()"></textarea></div>
             </div>
@@ -440,6 +441,7 @@
         <div class="mps-group" id="mps-group-1"><label id="mps-lbl-1">Name</label><input type="text" id="mps-prop-1" oninput="updateActiveProp(1,this.value)" onchange="pushHistory()" autocomplete="off"></div>
         <div class="mps-group" id="mps-group-icon" style="display:none;"><label>Icon</label><select id="mps-prop-icon" onchange="updateNodeIcon(this.value)"></select></div>
         <div class="mps-group" id="mps-group-2"><label id="mps-lbl-2">IP / Subnet</label><input type="text" id="mps-prop-2" oninput="updateActiveProp(2,this.value)" onchange="pushHistory()" autocomplete="off"></div>
+        <div class="mps-group" id="mps-group-5"><label id="mps-lbl-5">MAC Address</label><input type="text" id="mps-prop-5" oninput="updateActiveProp(5,this.value)" onchange="pushHistory()" autocomplete="off" placeholder="AA:BB:CC:DD:EE:FF"></div>
         <div class="mps-group" id="mps-group-3"><label id="mps-lbl-3">Target Port</label><input type="text" id="mps-prop-3" oninput="updateActiveProp(3,this.value)" onchange="pushHistory()" autocomplete="off"></div>
         <div class="mps-group" id="mps-group-4"><label id="mps-lbl-4">Notes</label><textarea id="mps-prop-4" rows="4" oninput="updateActiveProp(4,this.value)" onchange="pushHistory()"></textarea></div>
         <button id="mps-delete-btn" onclick="deleteSelected(); closeMobileProps();">🗑️ Delete Selected</button>
@@ -892,7 +894,7 @@
         if (isBgClick && !IS_VIEWER) {
             if (mode === 'place') {
                 const pos = snapPoint(getMousePos(synth), false);
-                nodes.push({ id:generateId(), type:selectedDeviceType, name:selectedDeviceType, ip:'', notes:'', x:pos.x, y:pos.y });
+                nodes.push({ id:generateId(), type:selectedDeviceType, name:selectedDeviceType, ip:'', mac:'', notes:'', x:pos.x, y:pos.y });
                 pushHistory(); render();
             } else if (mode === 'site') {
                 isDrawingSite = true; startPos = snapPoint(getMousePos(synth), true);
@@ -1059,7 +1061,7 @@
     function handleItemMouseDown(e, id, type) {
         if (IS_VIEWER && e.button===2) {
             e.stopPropagation(); let txt='';
-            if (type==='node'){const n=nodes.find(x=>x.id===id);if(n)txt=`Name:${n.name||'N/A'}\nIP:${n.ip||'N/A'}\nNotes:${n.notes||'None'}`;}
+            if (type==='node'){const n=nodes.find(x=>x.id===id);if(n)txt=`Name:${n.name||'N/A'}\nIP:${n.ip||'N/A'}\nMAC:${n.mac||'N/A'}\nNotes:${n.notes||'None'}`;}
             else if(type==='site'){const s=sites.find(x=>x.id===id);if(s)txt=`Site:${s.name||'N/A'}\nNotes:${s.notes||'None'}`;}
             navigator.clipboard.writeText(txt).then(()=>triggerToast('✓ Copied')); return;
         }
@@ -1142,9 +1144,11 @@
         const hasSelection = selectedNodes.size===1||selectedEdges.size===1||selectedSites.size===1; if (!hasSelection) return;
 
         const mIcon = document.getElementById('mps-group-icon'); if (mIcon) mIcon.style.display='none';
+        const mMac = document.getElementById('mps-group-5'); if (mMac) mMac.style.display='none';
         if (selectedNodes.size===1) {
             const node = nodes.find(n=>n.id===Array.from(selectedNodes)[0]); if (!node) return;
             document.getElementById('mps-title').firstChild.textContent = '⚙️ Device: '; document.getElementById('mps-lbl-1').textContent = 'Device Name'; document.getElementById('mps-prop-1').value = node.name||''; document.getElementById('mps-lbl-2').textContent = 'IP / Subnet'; document.getElementById('mps-prop-2').value = node.ip||''; document.getElementById('mps-group-3').style.display='none'; document.getElementById('mps-lbl-4').textContent = 'Notes'; document.getElementById('mps-prop-4').value = node.notes||''; document.getElementById('mps-group-2').style.display='block';
+            if (mMac) { mMac.style.display='block'; document.getElementById('mps-prop-5').value = node.mac||''; }
             if (node.type==='Generic'&&mIcon){ mIcon.style.display='block'; document.getElementById('mps-prop-icon').value=getNodeIcon(node); }
         } else if (selectedSites.size===1) {
             const site = sites.find(s=>s.id===Array.from(selectedSites)[0]); if (!site) return;
@@ -1177,9 +1181,11 @@
         let visible=false;
 
         const gIcon=document.getElementById('group-icon'); if(gIcon) gIcon.style.display='none';
+        const g5=document.getElementById('group-5'),p5=document.getElementById('prop-5'); if(g5) g5.style.display='none';
         if (selectedNodes.size===1&&selectedSites.size===0&&selectedEdges.size===0) {
             const node=nodes.find(n=>n.id===Array.from(selectedNodes)[0]);
             if(node){l1.innerText='Device Name';p1.value=node.name||'';l2.innerText='IP / Subnet';p2.value=node.ip||'';l4.innerText='Notes';p4.value=node.notes||'';g1.style.display='flex';g2.style.display='flex';g3.style.display='none';g4.style.display='flex';propsPanel.style.display='flex';noProps.style.display='none';visible=true;
+                if(g5){g5.style.display='flex';p5.value=node.mac||'';}
                 if(node.type==='Generic'&&gIcon){ gIcon.style.display='flex'; document.getElementById('prop-icon').value=getNodeIcon(node); }}
         } else if (selectedSites.size===1&&selectedNodes.size===0&&selectedEdges.size===0) {
             const site=sites.find(s=>s.id===Array.from(selectedSites)[0]);
@@ -1200,14 +1206,14 @@
         const desktopId = `prop-${fieldNum}`, mobileId = `mps-prop-${fieldNum}`;
         const desk = document.getElementById(desktopId), mob = document.getElementById(mobileId);
         if (document.activeElement === desk && mob) mob.value = value; if (document.activeElement === mob && desk) desk.value = value;
-        if (selectedNodes.size===1&&selectedSites.size===0&&selectedEdges.size===0) { const node=nodes.find(n=>n.id===Array.from(selectedNodes)[0]); if(node){if(fieldNum===1)node.name=value;else if(fieldNum===2)node.ip=value;else if(fieldNum===4)node.notes=value;render(false);} }
+        if (selectedNodes.size===1&&selectedSites.size===0&&selectedEdges.size===0) { const node=nodes.find(n=>n.id===Array.from(selectedNodes)[0]); if(node){if(fieldNum===1)node.name=value;else if(fieldNum===2)node.ip=value;else if(fieldNum===5)node.mac=value;else if(fieldNum===4)node.notes=value;render(false);} }
         else if (selectedSites.size===1&&selectedNodes.size===0&&selectedEdges.size===0) { const site=sites.find(s=>s.id===Array.from(selectedSites)[0]); if(site){if(fieldNum===1)site.name=value;else if(fieldNum===4)site.notes=value;render(false);} }
         else if (selectedEdges.size===1&&selectedNodes.size===0&&selectedSites.size===0) { const edge=edges.find(ed=>ed.id===Array.from(selectedEdges)[0]); if(edge){if(fieldNum===1)edge.label=value;else if(fieldNum===2)edge.sourceLabel=value;else if(fieldNum===3)edge.targetLabel=value;else if(fieldNum===4)edge.notes=value;render(false);} }
     }
 
     function showViewerPopup(id, type, x, y) {
         const popup=document.getElementById('viewer-popup'); const title=document.getElementById('vp-title'); const content=document.getElementById('vp-content'); let infoText='';
-        if(type==='node'){const n=nodes.find(n=>n.id===id);title.innerText=n.name||'Unnamed';content.innerHTML=`<strong>IP:</strong> ${n.ip||'N/A'}<br/><br/><strong>Notes:</strong><br/>${(n.notes||'None').replace(/\n/g,'<br/>')}`;infoText=`Name:${n.name||'N/A'}\nIP:${n.ip||'N/A'}\nNotes:${n.notes||'None'}`;}
+        if(type==='node'){const n=nodes.find(n=>n.id===id);title.innerText=n.name||'Unnamed';content.innerHTML=`<strong>IP:</strong> ${n.ip||'N/A'}<br/><strong>MAC:</strong> ${n.mac||'N/A'}<br/><br/><strong>Notes:</strong><br/>${(n.notes||'None').replace(/\n/g,'<br/>')}`;infoText=`Name:${n.name||'N/A'}\nIP:${n.ip||'N/A'}\nMAC:${n.mac||'N/A'}\nNotes:${n.notes||'None'}`;}
         else if(type==='site'){const s=sites.find(s=>s.id===id);title.innerText=s.name||'Unnamed Site';content.innerHTML=`<strong>Notes:</strong><br/>${(s.notes||'None').replace(/\n/g,'<br/>')}`;infoText=`Site:${s.name||'N/A'}\nNotes:${s.notes||'None'}`;}
         else if(type==='edge'){const ed=edges.find(e=>e.id===id);const cp=cableTypes[ed.type]||cableTypes['1GbE'];title.innerText=ed.label||cp.name;content.innerHTML=`<strong>Type:</strong> ${cp.name}<br/><br/><strong>Source:</strong> ${ed.sourceLabel||'None'}<br/><strong>Target:</strong> ${ed.targetLabel||'None'}<br/><br/><strong>Notes:</strong><br/>${(ed.notes||'None').replace(/\n/g,'<br/>')}`;infoText=`Type:${cp.name}\nNotes:${ed.notes||'None'}`;}
         popup.style.display='flex'; infoTooltip.style.display='none'; document.getElementById('vp-copy').onclick=()=>navigator.clipboard.writeText(infoText).then(()=>triggerToast('✓ Copied'));
@@ -1417,13 +1423,13 @@
                 if(document.getElementById('viewer-popup').style.display==='flex') return;
                 if(isDragging||isPanning||resizingSiteId) return; if(!IS_VIEWER&&mode!=='select') return;
                 const safeNotes=node.notes?node.notes.replace(/</g,'&lt;').replace(/>/g,'&gt;'):'None';
-                infoTooltip.innerHTML=`<strong style="font-size:15px;color:#4dabf7;">${node.name||'Unnamed'}</strong><br/><br/><span style="color:#9ab;">IP:</span> ${node.ip||'N/A'}<br/><br/>${safeNotes}`;
+                infoTooltip.innerHTML=`<strong style="font-size:15px;color:#4dabf7;">${node.name||'Unnamed'}</strong><br/><br/><span style="color:#9ab;">IP:</span> ${node.ip||'N/A'}<br/><span style="color:#9ab;">MAC:</span> ${node.mac||'N/A'}<br/><br/>${safeNotes}`;
                 infoTooltip.style.display='block'; const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px';
             });
             g.addEventListener('mousemove', e=>{ if(isDragging||isPanning||(!IS_VIEWER&&mode!=='select')){infoTooltip.style.display='none';return;} const tw=250; let xp=e.clientX+15,yp=e.clientY+15; if(xp+tw>window.innerWidth)xp=e.clientX-tw-15; infoTooltip.style.left=xp+'px'; infoTooltip.style.top=yp+'px'; });
             g.addEventListener('mouseleave',()=>infoTooltip.style.display='none');
 
-            const safeName=node.name||'',safeIp=node.ip||'';
+            const safeName=node.name||'',safeIp=node.ip||'',safeMac=node.mac||'';
             let strokeCol='var(--stroke-color)',strokeW='2';
             if(isSel||isResN){strokeCol='#007bff';strokeW='4';} else if(isRel){strokeCol='#17a2b8';strokeW='3';}
 
@@ -1437,26 +1443,38 @@
             if(isRel&&!isSel) rect.style.filter='drop-shadow(0px 0px 6px rgba(23,162,184,0.6))';
             g.appendChild(rect);
 
+            // Stacked caption block: icon on top, then name / IP / MAC lines, whole
+            // stack centred vertically so any combination of fields stays inside the box.
+            const captionLines=[];
+            if(safeName) captionLines.push({ text:safeName, size:10, weight:'bold',   fill:'var(--text-main)', lh:11 });
+            if(safeIp)   captionLines.push({ text:safeIp,   size:8,  weight:'normal', fill:'var(--text-sub)',  lh:9  });
+            if(safeMac){
+                // Shrink the MAC to fit narrow boxes; fall back to the last 3 octets (OUI dropped)
+                // rather than letting it spill outside the block.
+                let macText=safeMac, macSize=7.5;
+                if(macText.length*macSize*0.6 > bw-6) macSize=Math.max(5.5,(bw-6)/(macText.length*0.6));
+                if(macText.length*macSize*0.6 > bw-6 && macText.length>8){ macText='…'+safeMac.slice(-8); macSize=7; }
+                captionLines.push({ text:macText, size:macSize, weight:'normal', fill:'var(--text-sub)', lh:9 });
+            }
+            const ICON_H=20;
+            const stackH=ICON_H + captionLines.reduce((s,l)=>s+l.lh,0);
+            let cursorY = bh/2 - stackH/2;
+
             const icon=document.createElementNS('http://www.w3.org/2000/svg','text');
-            icon.setAttribute('x', bw/2); icon.setAttribute('y', bh/2 - (safeIp?6:-2));
+            icon.setAttribute('x', bw/2); icon.setAttribute('y', cursorY + 17);
             icon.setAttribute('text-anchor','middle'); icon.setAttribute('font-size','22');
             icon.textContent=getNodeIcon(node); g.appendChild(icon);
+            cursorY += ICON_H;
 
-            const nameT=document.createElementNS('http://www.w3.org/2000/svg','text');
-            nameT.setAttribute('x', bw/2); nameT.setAttribute('y', bh/2 + (safeIp?10:18));
-            nameT.setAttribute('text-anchor','middle');
-            nameT.setAttribute('font-family','sans-serif'); nameT.setAttribute('font-size','10');
-            nameT.setAttribute('font-weight','bold'); nameT.setAttribute('fill','var(--text-main)');
-            nameT.textContent=safeName; g.appendChild(nameT);
-
-            if(safeIp){
-                const ipT=document.createElementNS('http://www.w3.org/2000/svg','text');
-                ipT.setAttribute('x', bw/2); ipT.setAttribute('y', bh/2 + 20);
-                ipT.setAttribute('text-anchor','middle');
-                ipT.setAttribute('font-family','sans-serif'); ipT.setAttribute('font-size','8');
-                ipT.setAttribute('fill','var(--text-sub)');
-                ipT.textContent=safeIp; g.appendChild(ipT);
-            }
+            captionLines.forEach(line=>{
+                const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+                t.setAttribute('x', bw/2); t.setAttribute('y', cursorY + line.lh - 2);
+                t.setAttribute('text-anchor','middle');
+                t.setAttribute('font-family','sans-serif'); t.setAttribute('font-size',line.size);
+                t.setAttribute('font-weight',line.weight); t.setAttribute('fill',line.fill);
+                t.textContent=line.text; g.appendChild(t);
+                cursorY += line.lh;
+            });
 
             // Resize handle (bottom-right) for the selected node
             if (isSel && mode==='select' && !IS_VIEWER && selectedNodes.size===1 && selectedSites.size===0 && selectedEdges.size===0) {
