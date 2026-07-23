@@ -228,6 +228,30 @@
             pointer-events: none;
         }
 
+        /* ── Save As dialog (Square) ── */
+        #saveas-backdrop {
+            display: none; position: fixed; inset: 0; z-index: 4000;
+            background: rgba(0,0,0,0.45);
+            align-items: center; justify-content: center; padding: 16px;
+        }
+        #saveas-backdrop.open { display: flex; }
+        #saveas-dialog {
+            background: var(--panel-bg); color: var(--text-main);
+            border: 1px solid var(--panel-border); border-radius: 0px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+            width: min(420px, 100%); padding: 18px;
+        }
+        #saveas-dialog h4 { margin: 0 0 14px; font-size: 15px; }
+        #saveas-dialog label { font-size: 11px; font-weight: bold; color: var(--text-sub); text-transform: uppercase; display: block; margin-bottom: 4px; }
+        #saveas-name, #saveas-format {
+            width: 100%; padding: 9px 10px; border: 1px solid var(--panel-border); border-radius: 0px;
+            font-size: 14px; font-family: inherit; background: var(--bg-color); color: var(--text-main);
+        }
+        #saveas-name:focus, #saveas-format:focus { outline: none; border-color: #007bff; }
+        #saveas-hint { font-size: 11px; color: var(--text-sub); margin-top: 6px; }
+        #saveas-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+        #saveas-actions .primary { background: #007bff !important; color: #fff !important; border-color: #0056b3 !important; }
+
         @media (max-width: 768px) {
             #toolbar { display: none; }
             #mobile-toolbar { display: flex; }
@@ -239,7 +263,7 @@
 
         @media print {
             #toolbar, #mobile-toolbar, #mobile-bottom, #mobile-props-sheet,
-            #sidebar, #viewer-popup, #info-tooltip, #mode-banner { display: none !important; }
+            #sidebar, #viewer-popup, #info-tooltip, #mode-banner, #saveas-backdrop { display: none !important; }
             #main-area { display: block; width: 100vw; height: 100vh; padding: 0; }
             #canvas-container { width: 100%; height: 100%; }
         }
@@ -289,6 +313,7 @@
                         <div class="more-dropdown-section">
                             <div class="more-dropdown-label">File</div>
                             <button onclick="saveJSON();closeMoreMenu()">💾 Save JSON</button>
+                            <button onclick="openSaveAs('json')">🖫 Save As… <span style="margin-left:auto;color:var(--text-sub);font-size:11px;">Ctrl+Shift+S</span></button>
                             <button onclick="document.getElementById('file-upload').click();closeMoreMenu()">📂 Load JSON</button>
                             <input type="file" id="file-upload" style="display:none;" accept=".json" onchange="loadJSON(event)">
                         </div>
@@ -358,6 +383,7 @@
             <button onclick="handleZoom(1.1)" title="Zoom Out">➖</button>
             <div class="mb-sep"></div>
             <button onclick="saveJSON()" style="background:#17a2b8;color:white;border-color:#117a8b;">💾</button>
+            <button onclick="openSaveAs('json')" title="Save As" style="background:#17a2b8;color:white;border-color:#117a8b;">🖫</button>
             <button onclick="document.getElementById('file-upload-m').click()" style="background:#17a2b8;color:white;border-color:#117a8b;">📂</button>
             <input type="file" id="file-upload-m" style="display:none;" accept=".json" onchange="loadJSON(event)">
             <button onclick="toggleDarkMode()" id="mb-btn-dark">🌙</button>
@@ -445,6 +471,31 @@
         <div class="mps-group" id="mps-group-3"><label id="mps-lbl-3">Target Port</label><input type="text" id="mps-prop-3" oninput="updateActiveProp(3,this.value)" onchange="pushHistory()" autocomplete="off"></div>
         <div class="mps-group" id="mps-group-4"><label id="mps-lbl-4">Notes</label><textarea id="mps-prop-4" rows="4" oninput="updateActiveProp(4,this.value)" onchange="pushHistory()"></textarea></div>
         <button id="mps-delete-btn" onclick="deleteSelected(); closeMobileProps();">🗑️ Delete Selected</button>
+    </div>
+
+    <!-- ═══ SAVE AS DIALOG ═══ -->
+    <div id="saveas-backdrop" onmousedown="if(event.target===this)closeSaveAs()">
+        <div id="saveas-dialog" role="dialog" aria-modal="true" aria-labelledby="saveas-heading">
+            <h4 id="saveas-heading">💾 Save As</h4>
+            <div style="margin-bottom:12px;">
+                <label for="saveas-name">File Name</label>
+                <input type="text" id="saveas-name" autocomplete="off" spellcheck="false"
+                       onkeydown="if(event.key==='Enter'){event.preventDefault();confirmSaveAs();}else if(event.key==='Escape'){event.preventDefault();closeSaveAs();}">
+            </div>
+            <div>
+                <label for="saveas-format">Format</label>
+                <select id="saveas-format" onchange="updateSaveAsExt()">
+                    <option value="json">Diagram Data (.json)</option>
+                    <option value="viewer">Interactive Viewer (.html)</option>
+                    <option value="png">Image (.png)</option>
+                </select>
+            </div>
+            <div id="saveas-hint">Saved to your browser's download folder.</div>
+            <div id="saveas-actions">
+                <button onclick="closeSaveAs()">Cancel</button>
+                <button class="primary" onclick="confirmSaveAs()">Save</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -855,11 +906,71 @@
         }
         syncRoutingUI(); pushHistory(); updateViewBox(); render(true);
     }
-    function saveJSON() {
-        const blob = new Blob([JSON.stringify({ title:getTitleValue(), nodes, edges, sites, routing: routingMode },null,2)], { type:'application/json' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-        a.download = (getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram') + '.json';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a); triggerToast('✓ JSON Saved');
+    function defaultBaseName() {
+        return getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase() || 'network_diagram';
+    }
+    function buildDiagramBlob() {
+        return new Blob([JSON.stringify({ title:getTitleValue(), nodes, edges, sites, routing: routingMode },null,2)], { type:'application/json' });
+    }
+    // Writes a blob to disk: native Save As picker when the browser supports it,
+    // otherwise a plain download using the supplied name.
+    async function deliverBlob(blob, fileName, ext, mime) {
+        if (window.showSaveFilePicker) {
+            try {
+                const handle = await window.showSaveFilePicker({
+                    suggestedName: fileName,
+                    types: [{ description: ext.toUpperCase()+' file', accept: { [mime]: ['.'+ext] } }]
+                });
+                const w = await handle.createWritable();
+                await w.write(blob); await w.close();
+                triggerToast('✓ Saved'); return true;
+            } catch (err) {
+                if (err && err.name === 'AbortError') return false; // user cancelled
+                // fall through to download on any other failure
+            }
+        }
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fileName;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+        triggerToast('✓ Saved'); return true;
+    }
+    function saveJSON(fileName) {
+        return deliverBlob(buildDiagramBlob(), fileName || defaultBaseName()+'.json', 'json', 'application/json');
+    }
+
+    // ── Save As dialog ──
+    function openSaveAs(format) {
+        if (IS_VIEWER) return;
+        closeMoreMenu();
+        const fmt = document.getElementById('saveas-format');
+        fmt.value = format || 'json';
+        document.getElementById('saveas-name').value = defaultBaseName();
+        updateSaveAsExt();
+        document.getElementById('saveas-backdrop').classList.add('open');
+        const nameInput = document.getElementById('saveas-name');
+        requestAnimationFrame(()=>{ nameInput.focus(); nameInput.select(); });
+    }
+    function closeSaveAs() { document.getElementById('saveas-backdrop').classList.remove('open'); }
+    function saveAsExtFor(format) { return format==='png' ? 'png' : format==='viewer' ? 'html' : 'json'; }
+    function updateSaveAsExt() {
+        const fmt = document.getElementById('saveas-format').value;
+        const hint = document.getElementById('saveas-hint');
+        const ext = saveAsExtFor(fmt);
+        hint.textContent = window.showSaveFilePicker
+            ? `Choose a folder next. Saved as .${ext}.`
+            : `Saved as .${ext} to your browser's download folder.`;
+    }
+    async function confirmSaveAs() {
+        const fmt = document.getElementById('saveas-format').value;
+        const ext = saveAsExtFor(fmt);
+        let base = document.getElementById('saveas-name').value.trim().replace(/[\\/:*?"<>|]/g,'_');
+        if (!base) base = defaultBaseName();
+        base = base.replace(new RegExp('\\.'+ext+'$','i'),'');
+        const fileName = base + '.' + ext;
+        closeSaveAs();
+        if (fmt === 'json')        await saveJSON(fileName);
+        else if (fmt === 'viewer') await exportViewer(fileName);
+        else                       await exportPNG(fileName);
     }
     function loadJSON(event) {
         if (IS_VIEWER) return;
@@ -1031,7 +1142,14 @@
     svg.addEventListener('touchcancel', e => { cancelLongPress(); Array.from(e.changedTouches).forEach(t => activeTouches.delete(t.identifier)); if (activeTouches.size === 0) pointerUp(); }, { passive:false });
 
     window.addEventListener('keydown', e => {
-        if (!e.key || IS_VIEWER) return; if (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+        if (!e.key || IS_VIEWER) return;
+        // Save shortcuts work even while a text field has focus.
+        if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='s') { e.preventDefault(); if(e.shiftKey) openSaveAs('json'); else saveJSON(); return; }
+        if (document.getElementById('saveas-backdrop').classList.contains('open')) {
+            if (e.key==='Escape') { e.preventDefault(); closeSaveAs(); }
+            return; // dialog is modal — swallow every other shortcut
+        }
+        if (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
         if (e.ctrlKey||e.metaKey) {
             if (e.key.toLowerCase()==='a') { e.preventDefault(); setMode('select'); selectedNodes.clear(); selectedEdges.clear(); selectedSites.clear(); nodes.forEach(n=>selectedNodes.add(n.id)); edges.forEach(ed=>selectedEdges.add(ed.id)); sites.forEach(s=>selectedSites.add(s.id)); render(); return; }
             if (e.key.toLowerCase()==='z') { e.preventDefault(); undo(); return; }
@@ -1604,7 +1722,7 @@
         if (refreshSidebar) updateSidebarUI(); if (!IS_VIEWER) autoSave();
     }
 
-    function exportPNG() {
+    function exportPNG(fileName) {
         const tn=new Set(selectedNodes),te=new Set(selectedEdges),ts=new Set(selectedSites);
         selectedNodes.clear();selectedEdges.clear();selectedSites.clear(); render(false);
         let minX=0,minY=0,maxX=1000,maxY=1000;
@@ -1624,7 +1742,7 @@
         img.onload=()=>{
             const canvas=document.createElement('canvas'); canvas.width=w*2;canvas.height=h*2;
             const ctx=canvas.getContext('2d');ctx.scale(2,2);ctx.drawImage(img,0,0);
-            const a=document.createElement('a'); a.download=(getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram')+'.png'; a.href=canvas.toDataURL('image/png');a.click();
+            canvas.toBlob(b=>{ if(b) deliverBlob(b, fileName || defaultBaseName()+'.png', 'png', 'image/png'); }, 'image/png');
             selectedNodes=tn;selectedEdges=te;selectedSites=ts;render();
         }; img.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(svgData)));
     }
@@ -1641,12 +1759,12 @@
         },500);
     }
 
-    function exportViewer() {
+    function exportViewer(fileName) {
         const data={title:getTitleValue(),nodes,edges,sites,routing:routingMode,isDark:document.body.classList.contains('dark-mode')};
         let html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
         html=html.replace('const IS_VIEWER = false;','const IS_VIEWER = true;'); html=html.replace('const INJECTED_DATA = null;',`const INJECTED_DATA = ${JSON.stringify(data)};`);
         const blob=new Blob([html],{type:'text/html;charset=utf-8'});
-        const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=(getTitleValue().replace(/[^a-z0-9]/gi,'_').toLowerCase()||'network_diagram')+'_viewer.html'; document.body.appendChild(a);a.click();document.body.removeChild(a);
+        return deliverBlob(blob, fileName || defaultBaseName()+'_viewer.html', 'html', 'text/html');
     }
     </script>
 </body>
