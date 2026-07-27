@@ -135,6 +135,9 @@
         .node:hover rect { stroke: #007bff !important; stroke-width: 3px !important; filter: drop-shadow(0px 0px 6px rgba(0,123,255,0.6)); }
         .site-box rect { transition: stroke 0.2s; }
         .site-box:hover rect { stroke: #007bff !important; }
+        /* The perimeter grab band lights up on hover; half-transparent so the thick
+           solid highlight doesn't obscure what sits under the site edge. */
+        .site-box:hover rect.site-hit { stroke-opacity: 0.5; }
         .edge-hover:hover line:first-child { stroke-width: 6px !important; }
 
         /* ── Tooltip (Square) ── */
@@ -1355,6 +1358,7 @@
             const hit=document.createElementNS('http://www.w3.org/2000/svg','rect');
             hit.setAttribute('x',site.x); hit.setAttribute('y',site.y);
             hit.setAttribute('width',site.w); hit.setAttribute('height',site.h);
+            hit.setAttribute('class','site-hit');
             hit.setAttribute('fill','none'); hit.setAttribute('stroke','transparent');
             hit.setAttribute('stroke-width','16'); hit.style.pointerEvents='stroke';
             g.appendChild(hit);
